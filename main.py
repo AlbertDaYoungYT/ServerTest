@@ -12,7 +12,11 @@ def HomePage():
 
 @app.route("/about")
 def About():
-    return render_template("about.html", data=Text.aboutTextPage)
+    return render_template("about.html", content=Text.aboutTextPage)
+
+@app.route("/shop")
+def Shop():
+    return render_template("shop.html", content=Text.ShopItems)
 
 if __name__ == '__main__':
-    app.run(port=80, debug=True)
+    app.run(port=5000, debug=True)
