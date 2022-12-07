@@ -16,11 +16,11 @@ def About():
 
 @app.route("/shop")
 def Shop():
-    return render_template("shop.html", content=Text.ShopItems, UserProfileSrc="Test", UserName="Test", isloggedin=True)
+    return render_template("shop.html", content=Text.ShopItems, UserProfileSrc="Test", UserName="Test", isloggedin=True, isadmin=False)
 
 @app.route("/signin")
 def SignIn():
-    return render_template("admin/index.html")
+    return render_template("login.html")
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
