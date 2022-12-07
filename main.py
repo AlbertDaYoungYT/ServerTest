@@ -4,15 +4,28 @@ import hashlib
 import uuid
 
 import data.text as Text
+import modules.DataBase as Data
+import modules.UserProfile as UP
+import data.settings as S
 import db as DB
 
 app = Flask(__name__)
 CORS(app)
 
+
+app.secret_key = S.SECRET
+app.config['SESSION_TYPE'] = 'filesystem'
+
+
 @app.route("/")
 def HomePage():
-    request.args.get('id')
-    return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False)
+    Uid = session.get('id')
+    if Uid == None:
+        return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False)
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        print(data)
+        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=False)
 
 @app.route("/about")
 def About():
@@ -24,8 +37,10 @@ def Shop():
 
 @app.route("/confirmsignin", methods=["POST"])
 def ConfirmLogin():
-    session["id"] = uuid.uuid1()
-    return render_template('index.html')
+    ID = uuid.uuid1()
+    session["id"] = ID
+    Data.CreateUser(ID, request.form["user"], request.form["pwd"])
+    return redirect(url_for('HomePage'))
 
 @app.route("/signin")
 def SignIn():
@@ -33,7 +48,8 @@ def SignIn():
 
 @app.route("/logout")
 def LogOut():
-    return "None"
+    session.clear()
+    return redirect(url_for('HomePage'))
 
 if __name__ == '__main__':
     app.run(debug=True)
