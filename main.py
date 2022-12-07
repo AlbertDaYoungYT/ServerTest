@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_cors import CORS
 
 import data.text as Text
+import modules.CookieManager as CM
 import db as DB
 
 app = Flask(__name__)
@@ -25,7 +26,7 @@ def SignIn():
 
 @app.route("/logout")
 def LogOut():
-    
+    return "None"
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
