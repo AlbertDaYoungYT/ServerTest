@@ -15,72 +15,119 @@
   <!-- Bootstrap core CSS -->
   <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+
+
   <!-- Custom styles for this template -->
+  <link href="static/css/headers.css" rel="stylesheet">
   <link href="static/css/index.css" rel="stylesheet">
 </head>
 
-<body>
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap" />
+        </svg>
+      </a>
 
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <div style="margin: 0px 100px; flex: fit-content;">
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="/games" class="nav-link px-2 text-white">Games</a></li>
+        <li><a href="/shop" class="nav-link px-2 text-white">Shop</a></li>
+        <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+      </ul>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      {% if isloggedin %}
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <img src="{{ UserProfileSrc }}" alt="{{ UserName }}" class="rounded-circle" width="32" height="32">
+        </a>
+        <ul class="dropdown-menu text-small">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="/profile/{{ UserProfile }}">Profile</a></li>
+          {% if isadmin %}
+          <li>
+            <hr class="dropdown-divider">
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/games" id="dropdown01" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">Games</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="/games/ttt">Tic Tac Toe</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+          <li><a class="dropdown-item" href="/admin/homepage">Admin Panel</a></li>
+          <li>
+            <hr class="dropdown-divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/shop">Shop</a>
+          {% else %}
+          <li>
+            <hr class="dropdown-divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
+          {% endif %}
+          <li><a class="dropdown-item" href="/logout">Sign out</a></li>
         </ul>
-        {% if isloggedin %}
-        <div class="flex-shrink-0 dropdown">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="{{ UserProfileSrc }}" alt="{{ UserName }}" class="rounded-circle" width="32" height="32">
-          </a>
-          <ul class="dropdown-menu text-small shadow" style="">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            {% if isadmin %}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="/admin/homepage">Admin Panel</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            {% else %}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            {% endif %}
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
-        </div>
-        {% else %}
-        <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
-        </div>
-        {% endif %}
-
       </div>
+      {% else %}
+      <div class="text-end">
+        <form action="/signin">
+          <input type="submit" class="btn btn-outline-light me-2" value="Login" />
+        </form>
+      </div>
+      {% endif %}
     </div>
-  </nav>
+  </div>
+</header>
+
+<body>
 
   <main role="main" class="container">
 

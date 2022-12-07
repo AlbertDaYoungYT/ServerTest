@@ -1,8 +1,9 @@
-from flask import Flask, render_template
+from flask import *
 from flask_cors import CORS
+import hashlib
+import uuid
 
 import data.text as Text
-import modules.CookieManager as CM
 import db as DB
 
 app = Flask(__name__)
@@ -10,7 +11,8 @@ CORS(app)
 
 @app.route("/")
 def HomePage():
-    return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=True, isadmin=False)
+    request.args.get('id')
+    return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False)
 
 @app.route("/about")
 def About():
@@ -19,6 +21,11 @@ def About():
 @app.route("/shop")
 def Shop():
     return render_template("shop.html", content=Text.ShopItems, UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=True, isadmin=False)
+
+@app.route("/confirmsignin", methods=["POST"])
+def ConfirmLogin():
+    session["id"] = uuid.uuid1()
+    return render_template('index.html')
 
 @app.route("/signin")
 def SignIn():
