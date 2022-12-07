@@ -8,11 +8,11 @@ CORS(app)
 
 @app.route("/")
 def HomePage():
-    return render_template('index.html')
+    return render_template('index.html', UserProfileSrc="Test", UserName="Test", isloggedin=True, isadmin=False)
 
 @app.route("/about")
 def About():
-    return render_template("about.html", content=Text.aboutTextPage)
+    return render_template("about.html", content=Text.aboutTextPage, UserProfileSrc="Test", UserName="Test", isloggedin=True, isadmin=False)
 
 @app.route("/shop")
 def Shop():
