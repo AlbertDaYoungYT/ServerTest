@@ -20,11 +20,9 @@
 
   <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div style="margin: 0px 100px; flex: fit-content;">
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
@@ -32,7 +30,8 @@
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/games" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Games</a>
+            <a class="nav-link dropdown-toggle" href="/games" id="dropdown01" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Games</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/games/ttt">Tic Tac Toe</a>
               <a class="dropdown-item" href="#">Another action</a>
@@ -47,20 +46,27 @@
           </li>
         </ul>
         {% if isloggedin %}
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ UserProfileSrc }}" alt="{{ UserName }}"class="rounded-circle" width="32" height="32">
+        <div class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="{{ UserProfileSrc }}" alt="{{ UserName }}" class="rounded-circle" width="32" height="32">
           </a>
-          <ul class="dropdown-menu text-small">
+          <ul class="dropdown-menu text-small shadow" style="">
             <li><a class="dropdown-item" href="#">New project...</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
             {% if isadmin %}
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item" href="/admin/homepage">Admin Panel</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             {% else %}
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             {% endif %}
             <li><a class="dropdown-item" href="#">Sign out</a></li>
           </ul>
@@ -71,8 +77,10 @@
           <button type="button" class="btn btn-warning">Sign-up</button>
         </div>
         {% endif %}
+
       </div>
-    </nav>
+    </div>
+  </nav>
 
     <main role="main" class="container">
 
@@ -90,5 +98,8 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
   </body>
 </html>
