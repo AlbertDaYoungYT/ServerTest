@@ -39,7 +39,7 @@ def Shop():
 def ConfirmLogin():
     ID = uuid.uuid1()
     session["id"] = ID
-    Data.CreateUser(ID, request.form["user"], request.form["pwd"])
+    Data.CreateUser(ID, request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
     return redirect(url_for('HomePage'))
 
 @app.route("/signin")
