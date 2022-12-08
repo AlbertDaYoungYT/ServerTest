@@ -37,11 +37,21 @@ def Shop():
 
 @app.route("/confirmsignin", methods=["POST"])
 def ConfirmLogin():
-    ID = uuid.uuid1()
-    session["id"] = ID
-    Data.CreateUser(ID, request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
-    return redirect(url_for('HomePage'))
+    if Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
+        Uid = Data.FetchUID(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
+        if Uid != False:
+            ID = uuid.uuid1()
+            session["id"] = ID
+            session["Uid"] = Uid
+            return redirect(url_for('HomePage'))
+        else:
+            flash("Uid could not be found, please contact an admin")
+            return redirect(url_for("SignIn"))
 
+
+    flash("Incorrect Username or Password")
+    return redirect(url_for("SignIn"))
+    
 @app.route("/signin")
 def SignIn():
     return render_template("login.html")
@@ -50,6 +60,37 @@ def SignIn():
 def LogOut():
     session.clear()
     return redirect(url_for('HomePage'))
+
+
+@app.route("/confirmsignup", methods=["POST"])
+def ConfirmLogin():
+    if not Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
+        ID = uuid.uuid3()
+        Uid = uuid.uuid1()
+        session["id"] = ID
+        session["Uid"] = Uid
+        Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
+        # ----------HERE----------
+        if Uid != False:
+            return redirect(url_for('HomePage'))
+        else:
+            flash("Uid could not be found, please contact an admin")
+            return redirect(url_for("SignIn"))
+
+
+    flash("User already exists")
+    return redirect(url_for("SignIn"))
+
+@app.route("/signup")
+def SignUp():
+    return render_template("signup.html")
+
+
+"""@app.route("/profile/<Uid>")
+def ProfileURL(Uid):
+    if Data.ValidateID(Uid):
+"""
+
 
 if __name__ == '__main__':
     app.run(debug=True)
