@@ -6,6 +6,7 @@ import uuid
 import data.text as Text
 import modules.DataBase as Data
 import modules.UserProfile as UP
+import modules.Theme as T
 import data.settings as S
 import db as DB
 
@@ -21,12 +22,18 @@ app.config['SESSION_TYPE'] = 'filesystem'
 def HomePage():
     Uid = session.get('Uid')
     if Uid == None:
-        return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False)
+        Theme = T.FetchDefaultTheme()
+        return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False, color1=Theme[1], color2=Theme[2], color3=Theme[3])
     else:
         data = list(UP.FetchUserdata(Uid))
         if ''.join(data) == "NOTFOUND":
             raise("Error Reading Userdata, please contact admin")
-        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=bool(data[-1]))
+
+        try: Theme = session["theme"]
+        except Exception: Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=bool(data[-1]), color1=Theme[1], color2=Theme[2], color3=Theme[3])
 
 @app.route("/about")
 def About():
@@ -66,6 +73,7 @@ def ConfirmSignup():
     if not Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
         Uid = uuid.uuid1()
         session["Uid"] = Uid
+        session["theme"] = "default"
         Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
         
         return redirect(url_for('HomePage'))
