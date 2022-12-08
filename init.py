@@ -9,6 +9,6 @@ mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`Username` TEXT NOT N
 mycursor.execute("CREATE TABLE `userdata` (`ID` TEXT NOT NULL,`DisplayName` TEXT NOT NULL,`ProfileIMG` INT NOT NULL,`isadmin` TEXT NOT NULL)")
 mycursor.execute("CREATE TABLE `themes` (`Name` TEXT NOT NULL,`color1` TEXT NOT NULL,`color2` INT NOT NULL,`color3` TEXT NOT NULL)")
 
-mycursor.execute("INSERT INTO themes (Name, color1, color2, color3) VALUES ('default', '#222222', '#ffffff', '#ff0000')")
+mycursor.execute("INSERT INTO themes (Name, color1, color2, color3) VALUES ('default', '#0d1821', '#f0f4ef', '#b4cded')")
 
 DB.db.commit()
