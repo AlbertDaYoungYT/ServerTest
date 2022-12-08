@@ -70,14 +70,8 @@ def ConfirmSignup():
         session["id"] = ID
         session["Uid"] = Uid
         Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
-
         
-        if Uid != False:
-            return redirect(url_for('HomePage'))
-        else:
-            flash("Uid could not be found, please contact an admin")
-            return redirect(url_for("SignUp"))
-
+        return redirect(url_for('HomePage'))
 
     flash("User already exists")
     return redirect(url_for("SignUp"))
