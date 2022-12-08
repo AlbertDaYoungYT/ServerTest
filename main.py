@@ -63,23 +63,24 @@ def LogOut():
 
 
 @app.route("/confirmsignup", methods=["POST"])
-def ConfirmLogin():
+def ConfirmSignup():
     if not Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
         ID = uuid.uuid3()
         Uid = uuid.uuid1()
         session["id"] = ID
         session["Uid"] = Uid
         Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
-        # ----------HERE----------
+
+        
         if Uid != False:
             return redirect(url_for('HomePage'))
         else:
             flash("Uid could not be found, please contact an admin")
-            return redirect(url_for("SignIn"))
+            return redirect(url_for("SignUp"))
 
 
     flash("User already exists")
-    return redirect(url_for("SignIn"))
+    return redirect(url_for("SignUp"))
 
 @app.route("/signup")
 def SignUp():
