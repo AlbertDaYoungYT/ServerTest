@@ -19,13 +19,14 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 @app.route("/")
 def HomePage():
-    Uid = session.get('id')
+    Uid = session.get('Uid')
     if Uid == None:
         return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False)
     else:
         data = list(UP.FetchUserdata(Uid))
-        print(data)
-        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=False)
+        if ''.join(data) == "NOTFOUND":
+            raise("Error Reading Userdata, please contact admin")
+        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=bool(data[-1]))
 
 @app.route("/about")
 def About():
@@ -40,8 +41,6 @@ def ConfirmLogin():
     if Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
         Uid = Data.FetchUID(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
         if Uid != False:
-            ID = uuid.uuid1()
-            session["id"] = ID
             session["Uid"] = Uid
             return redirect(url_for('HomePage'))
         else:
@@ -65,9 +64,7 @@ def LogOut():
 @app.route("/confirmsignup", methods=["POST"])
 def ConfirmSignup():
     if not Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
-        ID = uuid.uuid3()
         Uid = uuid.uuid1()
-        session["id"] = ID
         session["Uid"] = Uid
         Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
         
