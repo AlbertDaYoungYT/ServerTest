@@ -23,7 +23,7 @@ def HomePage():
     Uid = session.get('Uid')
     if Uid == None:
         Theme = T.FetchDefaultTheme()
-        return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False, color1=Theme[1], color2=Theme[2], color3=Theme[3])
+        return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False, color1=Theme[1], color2=Theme[2], color3=Theme[3], color4=Theme[4])
     else:
         data = list(UP.FetchUserdata(Uid))
         if ''.join(data) == "NOTFOUND":
@@ -33,7 +33,12 @@ def HomePage():
         except Exception: Theme = "default"
         Theme = T.FetchTheme(Theme)
 
-        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[1].lower()}", isloggedin=True, isadmin=bool(data[-1]), color1=Theme[1], color2=Theme[2], color3=Theme[3])
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        return render_template('index.html', UserProfileSrc=f"static/favicons/{data[2]}", UserName=data[1], UserProfile=f"{data[0]}", isloggedin=True, isadmin=admin, color1=Theme[1], color2=Theme[2], color3=Theme[3], color4=Theme[4])
 
 @app.route("/about")
 def About():
@@ -86,11 +91,15 @@ def SignUp():
     return render_template("signup.html")
 
 
-"""@app.route("/profile/<Uid>")
-def ProfileURL(Uid):
-    if Data.ValidateID(Uid):
-"""
+@app.route("/profile/<uid>")
+def ProfileURL(uid):
+    try:
+        if uid == str(session["Uid"]):
+            return str(UP.FetchUserdata(uid))
+    except Exception:
+        pass
 
+    return redirect(url_for("HomePage"))
 
 if __name__ == '__main__':
     app.run(host="192.168.218.138", debug=True)
