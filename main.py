@@ -102,4 +102,4 @@ def ProfileURL(uid):
     return redirect(url_for("HomePage"))
 
 if __name__ == '__main__':
-    app.run(host="192.168.111.240", debug=True)
+    app.run(debug=True)
