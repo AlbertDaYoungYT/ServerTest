@@ -107,4 +107,4 @@ def ProfileURL(uid):
     return redirect(url_for("HomePage"))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="192.168.1.30", port=80, debug=True)
