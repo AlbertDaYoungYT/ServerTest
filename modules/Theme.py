@@ -2,7 +2,7 @@ import db as DB
 import time
 
 def FetchTheme(ID):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM themes")
     results = cursor.fetchall()
 
@@ -15,7 +15,7 @@ def FetchTheme(ID):
 
 def FetchDefaultTheme():
     ID = "default"
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM themes")
     results = cursor.fetchall()
 

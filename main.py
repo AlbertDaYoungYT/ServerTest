@@ -26,8 +26,11 @@ def HomePage():
         return render_template('index.html', UserProfileSrc="Test", UserName="Test", UserProfile="Test", isloggedin=False, isadmin=False, color1=Theme[1], color2=Theme[2], color3=Theme[3], color4=Theme[4], color5=Theme[5])
     else:
         data = list(UP.FetchUserdata(Uid))
-        if ''.join(data) == "NOTFOUND":
-            return redirect(url_for("LogOut"))
+        try:
+            if ''.join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception:
+            pass
 
         try: Theme = session["theme"]
         except Exception: Theme = "default"
@@ -77,12 +80,12 @@ def LogOut():
 def ConfirmSignup():
     if not Data.ValidateUser(request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
         try:
-            if len(request.form["bday"]) == 10 and len(request.form["bday"].split("-")) == 3 and int(request.form["bday"].split("-")[0]):
+            if len(request.form["bday"]) == 10 and len(request.form["bday"].split("-")) == 3:
                 Uid = uuid.uuid1()
                 session["Uid"] = Uid
                 session["theme"] = "default"
                 Data.CreateUser(Uid, request.form["dname"], request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest(), request.form["bday"])
-                
+
                 return redirect(url_for('HomePage'))
         except Exception:
             flash("Some fields are not filled out correctly")

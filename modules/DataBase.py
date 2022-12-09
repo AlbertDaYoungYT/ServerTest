@@ -2,14 +2,14 @@ import db as DB
 import time
 
 def CreateUser(ID, DisplayName, Username, PwdHash, bday):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute(f"INSERT INTO users (ID, Username, PwdHash, CreationDate) VALUES ('{ID}', '{Username}', '{PwdHash}', '{time.time()}')")
-    cursor.execute(f"INSERT INTO userdata (ID, DisplayName, ProfileIMG, Description, Birthday, GCoins, Credits, isadmin) VALUES ('{ID}', '{DisplayName}', 'default.png', '', '{bday}', 0, 0, , 'False')")
+    cursor.execute(f"INSERT INTO userdata (ID, DisplayName, ProfileIMG, Description, Birthday, GCoins, Credits, isadmin) VALUES ('{ID}', '{DisplayName}', 'default.png', '', '{bday}', 0, 0, 'False')")
 
-    DB.db.commit()
+    DB.MainDB.commit()
 
 def ValidateUser(Username, PwdHash):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM users")
     results = cursor.fetchall()
 
@@ -21,7 +21,7 @@ def ValidateUser(Username, PwdHash):
     return False
 
 def ValidateID(ID):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM users")
     results = cursor.fetchall()
 
@@ -33,7 +33,7 @@ def ValidateID(ID):
     return False
 
 def FetchUID(Username, PwdHash):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM users")
     results = cursor.fetchall()
 

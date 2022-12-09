@@ -2,7 +2,7 @@ import db as DB
 import time
 
 def FetchUserdata(ID):
-    cursor = DB.db.cursor()
+    cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM userdata")
     results = cursor.fetchall()
 
