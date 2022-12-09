@@ -70,23 +70,27 @@
 
 
     .heads {
-      background-color: {{color1}} !important;
+      background-color: {{color4}} !important;
     }
 
     .bodys {
       background-color: {{color2}};
     }
 
-    .navac {
-      background-color: {{color3}}!important;
+    .nav-pills .nav-link.active {
+      background-color: {{color3}};
     }
 
     .navin {
       color: {{color3}};
     }
 
+    .btn-primary {
+      background-color: {{color3}};
+    }
+
     .fillbtn {
-      background-color: {{color3}}!important;
+    	background-color: {{color3}};
     }
 
     .normbtn {
@@ -104,7 +108,7 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
         <section>
-          <svg id="dark_mode" width="15" height="15" viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg"
+          <svg id="dark_mode" width="25" height="25" viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg"
             style="margin: 0px 20px 0px 0px;">
             <path class="moon"
               d="M 27.5 0 C 34.791 0 41.79 2.899 46.945 8.055 C 52.101 13.21 55 20.209 55 27.5 C 55 34.791 52.101 41.79 46.945 46.945 C 41.79 52.101 34.791 55 27.5 55 C 20.209 55 13.21 52.101 8.055 46.945 C 2.899 41.79 0 34.791 0 27.5 C 0 20.209 2.899 13.21 8.055 8.055 C 13.21 2.899 20.209 0 27.5 0 Z"
@@ -188,7 +192,7 @@
       <h2 class="pb-2 border-bottom">Columns with icons</h2>
       <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         <div class="feature col">
-          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
             <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
           </div>
           <h3 class="fs-2">Featured title</h3>
@@ -199,7 +203,7 @@
           </a>
         </div>
         <div class="feature col">
-          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
             <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"></use></svg>
           </div>
           <h3 class="fs-2">Featured title</h3>
@@ -210,7 +214,7 @@
           </a>
         </div>
         <div class="feature col">
-          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
             <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
           </div>
           <h3 class="fs-2">Featured title</h3>
@@ -261,9 +265,25 @@
         }, "-=350")
         .add({
           targets: "body",
-          backgroundColor: toggle ? '{{color2}}' : '{{color4}}',
-          color: toggle ? '{{color4}}' : '{{color2}}'
-        }, "-=700");
+          backgroundColor: toggle ? '{{color2}}' : '{{color1}}',
+          color: toggle ? '{{color1}}' : '{{color2}}'
+        }, "-=700")
+        .add({
+          targets: ".fillbtn",
+          backgroundColor: toggle ? '{{color3}}' : '{{color5}}'
+        }, "-=850")
+        .add({
+          targets: ".normbtn",
+          color: toggle ? '{{color3}}' : '{{color5}}'
+        }, "-=900")
+        .add({
+          targets: ".nav-link.active",
+          backgroundColor: toggle ? '{{color3}}' : '{{color5}}'
+        }, "-=950")
+        .add({
+          targets: ".navin",
+          color: toggle ? '{{color3}}' : '{{color5}}'
+        }, "-=1000");
 
       if (!toggle) {
         toggle = true;
