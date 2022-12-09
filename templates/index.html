@@ -168,12 +168,15 @@
 <body class="bodys">
 
   <main role="main" class="container">
+	{% if isloggedin %}
+
+	{% else %}
     <div class="px-4 py-5 my-5 text-center">
       <h1 class="display-5 fw-bold">Centered hero</h1>
       <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <button type="button" class="fillbtn btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+          <button href="/signup" type="button" class="fillbtn btn btn-primary btn-lg px-4 gap-3">Signup</button>
           <button type="button" class="normbtn btn btn-outline-secondary btn-lg px-4">Secondary</button>
         </div>
       </div>
@@ -223,7 +226,7 @@
       </div>
     </div>
 
-
+	{% endif %}
   </main><!-- /.container -->
 
   <!-- Bootstrap core JavaScript
@@ -232,7 +235,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="static/js/jquery-slim.min.js"><\/script>')</script>
   <script src="static/js/popper.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/anime.min.js"></script>

@@ -1,10 +1,10 @@
 import db as DB
 import time
 
-def CreateUser(ID, DisplayName, Username, PwdHash):
+def CreateUser(ID, DisplayName, Username, PwdHash, bday):
     cursor = DB.db.cursor()
     cursor.execute(f"INSERT INTO users (ID, Username, PwdHash, CreationDate) VALUES ('{ID}', '{Username}', '{PwdHash}', '{time.time()}')")
-    cursor.execute(f"INSERT INTO userdata (ID, DisplayName, ProfileIMG, Description, GCoins, Credits, isadmin) VALUES ('{ID}', '{DisplayName}', 'default.png', '', 0, 0, 'False')")
+    cursor.execute(f"INSERT INTO userdata (ID, DisplayName, ProfileIMG, Description, Birthday, GCoins, Credits, isadmin) VALUES ('{ID}', '{DisplayName}', 'default.png', '', '{bday}', 0, 0, , 'False')")
 
     DB.db.commit()
 
