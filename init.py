@@ -20,3 +20,14 @@ mycursor.execute("CREATE TABLE `badgeowners` (`OwnerID` TEXT NOT NULL,`BadgeID` 
 mycursor.execute("INSERT INTO themes (Name, color1, color2, color3, color4, color5) VALUES ('default', '#0d1821', '#f0f4ef', '#9c0d38', '#05001e', '#b370b0')")
 
 DB.MainDB.commit()
+
+
+mycursor = DB.ChallengesDB.cursor()
+
+mycursor.execute("DROP TABLE IF EXISTS allc")
+mycursor.execute("DROP TABLE IF EXISTS users")
+
+mycursor.execute("CREATE TABLE `allc` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Trigger` TEXT NOT NULL,`Image` TEXT NOT NULL,`Reward` INT NOT NULL,`CreationDate` INT NOT NULL)")
+mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C2` TEXT NOT NULL,`C3` TEXT NOT NULL,`C4` TEXT NOT NULL,`C5` TEXT NOT NULL)")
+
+DB.MainDB.commit()

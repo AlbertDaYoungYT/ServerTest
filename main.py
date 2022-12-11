@@ -31,7 +31,6 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
 @app.route("/upload", methods=["POST"])
 def upload_image():
     if "file" not in request.files:
@@ -44,9 +43,9 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        img = Image.open(UPLOAD_FOLDER + "/" + filename) # Open image
-        img = img.resize((512, 512), Image.ANTIALIAS) # Resize image
-        img.save(UPLOAD_FOLDER + "/" + filename, format='JPEG') # Save resized image
+        img = Image.open(UPLOAD_FOLDER + "/" + filename)  # Open image
+        img = img.resize((512, 512), Image.ANTIALIAS)  # Resize image
+        img.save(UPLOAD_FOLDER + "/" + filename, format="JPEG")  # Save resized image
         # print('upload_image filename: ' + filename)
         flash("Image successfully uploaded and displayed below")
         return render_template("upload.html")
@@ -320,5 +319,37 @@ def PostEditProfile(uid):
         return redirect(url_for("HomePage"))
 
 
+@app.route("/applyadmin", methods=["POST", "GET"])
+def ApplyForAdmin():
+    return render_template("admin/applyadmin.html")
+
+
+@app.route("/applyadminp", methods=["POST", "GET"])
+def PostApplyForAdmin():
+    if Data.ValidateID(request.form["uid"]) and Data.ValidateUser(request.form["fname"], hashlib.sha512(request.form["pwd"].encode()).hexdigest())
+    f = open(
+        "data/applications/"
+        + request.form["fname"]
+        + "-"
+        + request.form["uid"]
+        + ".txt",
+        "w",
+    )
+    f.write(request.form["uid"] + "\n")
+    f.write(request.form["fname"] + "\n")
+    f.write(hashlib.sha512(request.form["pwd"].encode()).hexdigest() + "\n")
+    f.write(
+        [
+            "I want to help make it a better place",
+            "I want to bully people",
+            "I want to help improve the platform",
+        ][int(request.form["whyradio"])]
+        + "\n"
+    )
+    f.write(request.form["whyother"] + "\n")
+    f.close()
+    return redirect(url_for("HomePage"))
+
+
 if __name__ == "__main__":
-    app.run(host="192.168.1.30", port=80, debug=True)
+    app.run(host="192.168.115.138", port=80, debug=True)
