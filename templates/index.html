@@ -75,6 +75,23 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    .stagger-visualizer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 17rem;
+      height: 17rem;
+    }
+
+    .stagger-visualizer div {
+      /*position: absolute;*/
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid #FFF;
+      background-color: #FFF;
+    }
+
 
 
     .heads {
@@ -187,11 +204,10 @@
 </header>
 
 <body class="bodys">
-
   <main role="main" class="container">
-	{% if isloggedin %}
-
-	{% else %}
+    {% if isloggedin %}
+    
+    {% else %}
     <div class="px-4 py-5 my-5 text-center">
       <h1 class="display-5 fw-bold">Centered hero</h1>
       <div class="col-lg-6 mx-auto">
