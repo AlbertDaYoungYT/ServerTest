@@ -35,11 +35,11 @@ def About():
         isadmin=False,
     )
 
-app.route("/admin")
+@app.route("/admin")
 def AdminURL():
     return redirect(url_for("AdminHome"))
 
-app.route("/admin/home")
+@app.route("/admin/home")
 def AdminHome():
     return render_template("admin/index.html")
 
