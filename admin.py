@@ -8,7 +8,7 @@ import data.settings as S
 import db as DB
 
 app.route("/admin")
-def Admin():
+def AdminURL():
     return redirect(url_for("AdminHome"))
 
 app.route("/admin/home")
