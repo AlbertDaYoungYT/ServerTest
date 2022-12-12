@@ -1,5 +1,4 @@
-from __main__ import app
-from flask import *
+from __main__ import *
 
 import data.text as Text
 import modules.DataBase as Data
