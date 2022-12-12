@@ -41,7 +41,23 @@ def AdminURL():
 
 @app.route("/admin/home")
 def AdminHome():
-    return render_template("admin/index.html")
+    return render_template("admin/index.html",
+                Uid=data[0],
+                UserProfileSrc=f"/static/favicons/{data[2]}",
+                UserName=data[1],
+                UserProfile=f"{data[0]}",
+                Description=data[3],
+                isloggedin=True,
+                isadmin=admin,
+                Fullname=edata[4],
+                Email=edata[3],
+                Phone=edata[2],
+                Address=edata[1],
+                color1=Theme[1],
+                color2=Theme[2],
+                color3=Theme[3],
+                color4=Theme[4],
+                color5=Theme[5],)
 
 @app.route("/applyadmin", methods=["POST", "GET"])
 def ApplyForAdmin():
