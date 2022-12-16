@@ -13,7 +13,8 @@ def GenerateID():
     data_for_encrypt = [platform.machine(),
                         platform.uname().node,
                         platform.system(),
-                        ip
+                        ip,
+                        "pepepopo"
                     ]
 
     final = []
@@ -65,4 +66,4 @@ def DecodeID(ID, time_of_creation):
     [ ID.insert(loc, " ") for loc in one_locs]
     ID = ''.join(ID).split()
 
-    print(ID)
+    return ID
