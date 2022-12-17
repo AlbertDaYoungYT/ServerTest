@@ -1,2 +1,3 @@
 1 -         Add Logic to Rareness Ranks
 2 -         Finish the specific-badge.html file
+3 -         Finish the index.html file to copy to other index files
