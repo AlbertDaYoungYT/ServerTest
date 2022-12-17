@@ -15,3 +15,8 @@ for x in range(10):
     BID = BD.CreateBadge(f"b{x}", f"be b{x}", "test", "trophy.png")
     BD.SetBadgeToUser(BID, "6446817b-7e25-11ed-8715-0234786e1906")
     print(BID)
+
+BID = BD.CreateBadge(f"b{x}", f"be b{x}", "damn", "trophy.png")
+BD.SetBadgeToUser(BID, "6446817b-7e25-11ed-8715-0234786e1906")
+BID = BD.CreateBadge(f"b{x}", f"be b{x}", "damn", "trophy.png")
+BD.SetBadgeToUser(BID, "6446817b-7e25-11ed-8715-0234786e1906")

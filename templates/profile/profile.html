@@ -17,14 +17,14 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">User Profile</li>
             </ol>
           </nav>
           <!-- /Breadcrumb -->
     
           <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
@@ -32,7 +32,11 @@
                     <div class="mt-3">
                       <h4>{{UserName}}</h4>
                       <p class="text-secondary mb-1">{{Description}}</p>
+                      {% if Address %}
                       <p class="text-muted font-size-sm">I live at {{Address}}</p>
+                      {% else %}
+                      <p class="text-muted font-size-sm">{{Address}}</p>
+                      {% endif %}
                       <!--<button class="btn btn-primary">Follow</button>-->
                       {% if isadmin %}
                       <button class="btn btn-primary">Admin Panel</button>

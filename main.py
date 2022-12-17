@@ -306,6 +306,8 @@ def ProfileBadgeList(uid):
     if uid == str(session["Uid"]):
         data = list(UP.FetchUserdata(uid))
         badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(uid))]
+        badges = [badge + [BD.CalculateRarity(BD.FetchBadge(badge[0])[4])] for badge in badges ]
+        badges.sort(key=lambda x: x[-1])
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
@@ -436,4 +438,4 @@ def LogOut():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context="adhoc")
+    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=('cert.pem', 'key.pem'))

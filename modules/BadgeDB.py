@@ -55,3 +55,17 @@ def FetchBadge(BID):
             return result
     
     return "NOTFOUND"
+
+def CalculateRarity(Type):
+    cursor = DB.MainDB.cursor()
+    cursor.execute("SELECT * FROM badges")
+    results = cursor.fetchall()
+
+    f_results = 0
+    for result in results:
+        result = list(result)
+        if Type == result[4]:
+            f_results += 1
+    
+
+    return 100 - round((f_results / len(results)) * 100, 2)
