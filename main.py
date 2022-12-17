@@ -89,7 +89,7 @@ def AdminHome():
         )
 
 
-@app.route("/applyadmin", methods=["POST", "GET"])
+@app.route("/applyadmin")
 def ApplyForAdmin():
     return render_template("admin/applyadmin.html")
 
