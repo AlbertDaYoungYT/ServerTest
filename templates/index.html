@@ -155,11 +155,9 @@
         <ul class="dropdown-menu text-small">
           <li>
             <div style="text-align: center;">
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
+              {% for badge in Badges %}
+              <a class="dot" style="background-image: url({{badge[5]}}); background-size: contain;" href="/profile/{{Uid}}/badges/{{badge[1]}}"></a>
+              {% endfor %}
             </div>
           </li>
           <li>

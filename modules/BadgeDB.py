@@ -1,14 +1,16 @@
+import modules.BadgeEncryptionAlgo as BEA
 import db as DB
-import hashlib
+import base64
 import time
 
-def CreateBadge(Name, Description, ImageID):
+def CreateBadge(Name, Description, Type, ImageID):
     cursor = DB.MainDB.cursor()
 
-    ID = hashlib.sha3_256(str(time.time()).encode()).hexdigest()
-    cursor.execute(f"INSERT INTO badges (BadgeID, Name, Description, ImageURL, CreationDate) VALUES ('{ID}', '{Name}', '{Description}', '/static/favicons/badges/{ImageID}', '{time.time()}')")
+    (ID, cDate) = BEA.GenerateID()
+    cursor.execute(f"INSERT INTO badges (BadgeID, UrlBadgeID, Name, Description, Type, ImageURL, CreationDate) VALUES ('{ID}', '{base64.b64encode(ID.encode()).decode()}', '{Name}', '{Description}', '{Type}', '/static/favicons/badges/{ImageID}', '{cDate}')")
 
     DB.MainDB.commit()
+    return ID
 
 def SetBadgeToUser(BID, UID):
     cursor = DB.MainDB.cursor()
@@ -22,12 +24,13 @@ def FetchUserBadges(UID):
     cursor.execute("SELECT * FROM badgeowners")
     results = cursor.fetchall()
 
+    final = []
     for result in results:
         result = list(result)
-        if result[0] == UID:
-            return result
+        if result[0] == str(UID):
+            final.append(result)
     
-    return "NOTFOUND"
+    return final
 
 def FetchAllBadges():
     cursor = DB.MainDB.cursor()

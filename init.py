@@ -13,7 +13,7 @@ mycursor.execute("CREATE TABLE `themes` (`Name` TEXT NOT NULL,`color1` TEXT NOT 
 mycursor.execute("CREATE TABLE `userdata` (`ID` TEXT NOT NULL,`DisplayName` TEXT NOT NULL,`ProfileIMG` TEXT NOT NULL,`Description` TEXT NOT NULL,`Birthday` INT NOT NULL,`GCoins` INT NOT NULL,`Credits` INT NOT NULL,`isadmin` TEXT NOT NULL)")
 mycursor.execute("CREATE TABLE `euserdata` (`ID` TEXT NOT NULL,`Address` TEXT NOT NULL,`Phone` TEXT NOT NULL,`Email` TEXT NOT NULL,`Fullname` TEXT NOT NULL)")
 
-mycursor.execute("CREATE TABLE `badges` (`BadgeID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Description` TEXT NOT NULL,`ImageURL` TEXT NOT NULL,`CreationDate` INT NOT NULL)")
+mycursor.execute("CREATE TABLE `badges` (`BadgeID` TEXT NOT NULL,`UrlBadgeID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Description` TEXT NOT NULL,`Type` TEXT NOT NULL,`ImageURL` TEXT NOT NULL,`CreationDate` INT NOT NULL)")
 mycursor.execute("CREATE TABLE `badgeowners` (`OwnerID` TEXT NOT NULL,`BadgeID` TEXT NOT NULL,`achievementDate` INT NOT NULL)")
 
 
@@ -27,7 +27,7 @@ mycursor = DB.ChallengesDB.cursor()
 mycursor.execute("DROP TABLE IF EXISTS allc")
 mycursor.execute("DROP TABLE IF EXISTS users")
 
-mycursor.execute("CREATE TABLE `all` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Trigger` TEXT NOT NULL,`Image` TEXT NOT NULL,`Reward` INT NOT NULL,`CreationDate` INT NOT NULL)")
+mycursor.execute("CREATE TABLE `allc` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Trigger` TEXT NOT NULL,`Image` TEXT NOT NULL,`Reward` INT NOT NULL,`CreationDate` INT NOT NULL)")
 mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C2` TEXT NOT NULL,`C3` TEXT NOT NULL,`C4` TEXT NOT NULL,`C5` TEXT NOT NULL)")
 
 DB.MainDB.commit()

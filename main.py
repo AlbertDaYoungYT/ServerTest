@@ -1,6 +1,7 @@
 from flask import *
 from werkzeug.utils import *
 from flask_cors import CORS
+from datetime import *
 import hashlib
 import uuid
 import os
@@ -8,6 +9,7 @@ import os
 import data.text as Text
 import modules.DataBase as Data
 import modules.UserProfile as UP
+import modules.BadgeDB as BD
 import modules.Theme as T
 import data.settings as S
 import db as DB
@@ -35,29 +37,57 @@ def About():
         isadmin=False,
     )
 
+
 @app.route("/admin")
 def AdminURL():
     return redirect(url_for("AdminHome"))
 
-@app.route("/admin/home")
+
+@app.route("/admin/homepage")
 def AdminHome():
-    return render_template("admin/index.html",
-                Uid=data[0],
-                UserProfileSrc=f"/static/favicons/{data[2]}",
-                UserName=data[1],
-                UserProfile=f"{data[0]}",
-                Description=data[3],
-                isloggedin=True,
-                isadmin=admin,
-                Fullname=edata[4],
-                Email=edata[3],
-                Phone=edata[2],
-                Address=edata[1],
-                color1=Theme[1],
-                color2=Theme[2],
-                color3=Theme[3],
-                color4=Theme[4],
-                color5=Theme[5],)
+    Uid = session.get("Uid")
+    if Uid == None:
+        return redirect(url_for("HomePage"))
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        edata = list(UP.FetchEUserdata(Uid))
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        return render_template(
+            "admin/index.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            Description=data[3],
+            isloggedin=True,
+            isadmin=admin,
+            Fullname=edata[4],
+            Email=edata[3],
+            Phone=edata[2],
+            Address=edata[1],
+            color1=Theme[1],
+            color2=Theme[2],
+            color3=Theme[3],
+            color4=Theme[4],
+            color5=Theme[5],
+        )
+
 
 @app.route("/applyadmin", methods=["POST", "GET"])
 def ApplyForAdmin():
@@ -66,7 +96,9 @@ def ApplyForAdmin():
 
 @app.route("/applyadminp", methods=["POST", "GET"])
 def PostApplyForAdmin():
-    if Data.ValidateID(request.form["uid"]) and Data.ValidateUser(request.form["fname"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()):
+    if Data.ValidateID(request.form["uid"]) and Data.ValidateUser(
+        request.form["fname"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()
+    ):
         f = open(
             "data/applications/"
             + request.form["fname"]
@@ -92,6 +124,7 @@ def PostApplyForAdmin():
     else:
         return redirect(url_for("SignIn"))
 
+
 @app.route("/")
 def HomePage():
     Uid = session.get("Uid")
@@ -112,6 +145,7 @@ def HomePage():
         )
     else:
         data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
@@ -131,17 +165,20 @@ def HomePage():
 
         return render_template(
             "index.html",
+            Uid=data[0],
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
             isloggedin=True,
             isadmin=admin,
+            Badges=badges,
             color1=Theme[1],
             color2=Theme[2],
             color3=Theme[3],
             color4=Theme[4],
             color5=Theme[5],
         )
+
 
 @app.route("/profile/<uid>")
 def ProfileURL(uid):
@@ -263,6 +300,62 @@ def PostEditProfile(uid):
     else:
         return redirect(url_for("HomePage"))
 
+
+@app.route("/profile/<uid>/badges")
+def ProfileBadgeList(uid):
+    if uid == str(session["Uid"]):
+        data = list(UP.FetchUserdata(uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+        
+        badgeTime = []
+        for times in badges:
+            badgeTime.append(datetime.fromtimestamp(round(times[6])))
+
+        return render_template(
+            "profile/badge.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            isloggedin=True,
+            isadmin=admin,
+            Badges=badges,
+            BadgeTime=badgeTime,
+            len=len(badgeTime),
+            color1=Theme[1],
+            color2=Theme[2],
+            color3=Theme[3],
+            color4=Theme[4],
+            color5=Theme[5],
+        )
+    else:
+        return redirect(url_for("HomePage"))
+
+
+@app.route("/profile/<uid>/badges/<urlbadgeid>")
+def ProfileBadge(uid, urlbadgeid):
+    if uid == str(session["Uid"]):
+        return render_template("profile/specific-badge.html")
+    else:
+        return redirect(url_for("HomePage"))
+
+
 @app.route("/shop")
 def Shop():
     return render_template(
@@ -274,6 +367,7 @@ def Shop():
         isloggedin=True,
         isadmin=False,
     )
+
 
 @app.route("/confirmsignin", methods=["POST"])
 def ConfirmLogin():
@@ -298,6 +392,7 @@ def ConfirmLogin():
 @app.route("/signin")
 def SignIn():
     return render_template("login.html")
+
 
 @app.route("/confirmsignup", methods=["POST"])
 def ConfirmSignup():
@@ -341,4 +436,4 @@ def LogOut():
 
 
 if __name__ == "__main__":
-    app.run(host="192.168.111.240", debug=True)
+    app.run(host="0.0.0.0", port=443, debug=True, ssl_context="adhoc")
