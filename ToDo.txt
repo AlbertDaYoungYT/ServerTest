@@ -1,0 +1,2 @@
+1 -         Add Logic to Rareness Ranks
+2 -         Finish the specific-badge.html file
