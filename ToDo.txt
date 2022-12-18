@@ -1,10 +1,10 @@
-1 -     V           Add Logic to Rareness Ranks
-2 -     X           Finish the specific-badge.html file
-3 -     X           Finish the index.html file to copy to other index files
-4 -     X           Create a easy Command Line Utility for managing the database
-5 -     X           Create Friends list and features
-6 -     X           Add Inventory and items for collection or selling
-7 -     X           Create a Marketplace
-8 -     X           Add auto dashes in SignUp Form
-9 -     X           Add Titles to html
-10-     X           Fix Apply For Admin in profile
+1   -     V           Add Logic to Rareness Ranks
+2   -     X           Finish the specific-badge.html file
+3   -     X           Finish the index.html file to copy to other index files
+4   -     X           Create Friends list and features
+5   -     X           Add Inventory and items for collection or selling
+6   -     X           Create a Marketplace
+7   -     X           Add auto dashes in SignUp Form
+8   -     X           Add Titles to html
+9   -     X           Fix Apply For Admin in profile
+10  -     X           Create the game server

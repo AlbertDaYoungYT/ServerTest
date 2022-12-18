@@ -1,4 +1,5 @@
 import db as DB
+import os
 
 mycursor = DB.MainDB.cursor()
 
@@ -31,3 +32,6 @@ mycursor.execute("CREATE TABLE `allc` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,
 mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C2` TEXT NOT NULL,`C3` TEXT NOT NULL,`C4` TEXT NOT NULL,`C5` TEXT NOT NULL)")
 
 DB.MainDB.commit()
+
+os.remove("data/friends.db")
+open("data/friends.db", "w")
