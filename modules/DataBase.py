@@ -9,6 +9,11 @@ def CreateUser(ID, DisplayName, Username, PwdHash, bday):
 
     DB.MainDB.commit()
 
+    cursor = DB.FriendsDB.cursor()
+    cursor.execute(f"CREATE TABLE `{ID}` (`ID` TEXT NOT NULL,`Username` TEXT NOT NULL,`FriendshipRank` INT NOT NULL,`DateMet` INT NOT NULL)")
+    
+    DB.FriendsDB.commit()
+
 def ValidateUser(Username, PwdHash):
     cursor = DB.MainDB.cursor()
     cursor.execute("SELECT * FROM users")
