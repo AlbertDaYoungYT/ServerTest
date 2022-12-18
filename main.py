@@ -340,6 +340,7 @@ def ProfileBadgeList(uid):
             Badges=badges,
             BadgeTime=badgeTime,
             len=len(badgeTime),
+            BadgeRanks=S.RARITY_RANKS,
             color1=Theme[1],
             color2=Theme[2],
             color3=Theme[3],

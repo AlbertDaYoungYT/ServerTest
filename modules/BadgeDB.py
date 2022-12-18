@@ -68,4 +68,4 @@ def CalculateRarity(Type):
             f_results += 1
     
 
-    return 100 - round((f_results / len(results)) * 100, 2)
+    return (f_results / len(results)) * 100

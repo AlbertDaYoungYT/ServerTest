@@ -64,7 +64,7 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Time</th>
-                                        <th scope="col">Rareness</th>
+                                        <th scope="col">Rareness Tier</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +75,17 @@
                                         <td>{{ Badges[i][3] }}</td>
                                         <td>{{ Badges[i][4] }}</td>
                                         <td>{{ BadgeTime[i] }}</td>
-                                        <td>{{ Badges[i][-1] }} %</td>
+                                        {% if Badges[i][-1] > BadgeRanks["C"][1] and Badges[i][-1] < BadgeRanks["C"][0] %}
+                                        <td>C</td>
+                                        {% elif Badges[i][-1] > BadgeRanks["B"][1] and Badges[i][-1] < BadgeRanks["B"][0] %}
+                                        <td>B</td>
+                                        {% elif Badges[i][-1] > BadgeRanks["A"][1] and Badges[i][-1] < BadgeRanks["A"][0] %}
+                                        <td>A</td>
+                                        {% elif Badges[i][-1] > BadgeRanks["S"][1] and Badges[i][-1] < BadgeRanks["S"][0] %}
+                                        <td>S</td>
+                                        {% elif Badges[i][-1] > BadgeRanks["V"][1] and Badges[i][-1] < BadgeRanks["V"][0] %}
+                                        <td>V</td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
