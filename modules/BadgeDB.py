@@ -7,7 +7,7 @@ def CreateBadge(Name, Description, Type, ImageID):
     cursor = DB.MainDB.cursor()
 
     (ID, cDate) = BEA.GenerateID()
-    cursor.execute(f"INSERT INTO badges (BadgeID, UrlBadgeID, Name, Description, Type, ImageURL, CreationDate) VALUES ('{ID}', '{base64.b64encode(ID.encode()).decode()}', '{Name}', '{Description}', '{Type}', '/static/favicons/badges/{ImageID}', '{cDate}')")
+    cursor.execute(f"INSERT INTO badges (BadgeID, UrlBadgeID, Name, Description, Type, ImageURL, CreationDate) VALUES ('{ID}', '{base64.urlsafe_b64encode(ID.encode()).decode()}', '{Name}', '{Description}', '{Type}', '/static/favicons/badges/{ImageID}', '{cDate}')")
 
     DB.MainDB.commit()
     return ID
@@ -56,16 +56,37 @@ def FetchBadge(BID):
     
     return "NOTFOUND"
 
-def CalculateRarity(Type):
-    cursor = DB.MainDB.cursor()
-    cursor.execute("SELECT * FROM badges")
-    results = cursor.fetchall()
+def CalculateRarity(Type, normal=True):
+    if normal:
+        cursor = DB.MainDB.cursor()
+        cursor.execute("SELECT * FROM badges")
+        results = cursor.fetchall()
 
-    f_results = 0
-    for result in results:
-        result = list(result)
-        if Type == result[4]:
-            f_results += 1
-    
+        f_results = 0
+        for result in results:
+            result = list(result)
+            if Type == result[4]:
+                f_results += 1
+        
 
-    return (f_results / len(results)) * 100
+        return (f_results / len(results)) * 100
+    else:
+        cursor = DB.MainDB.cursor()
+        cursor.execute("SELECT * FROM badges")
+        results = cursor.fetchall()
+
+        f_results = 0
+        f_amount = 0
+        for result in results:
+            result = list(result)
+            if Type == result[4]:
+                f_results += 1
+            f_amount += 1
+        
+        if f_amount > 1000:
+            suffixes = ["", "Thousand", "Million", "Billion", "Trillion", "Quadrillion"]
+            f_amount = "{:,}".format(f_amount)
+
+            return f"{f_results} out of {' '.join(list((f_amount[:f_amount.find(',')], suffixes[f_amount.count(',')])))}"
+        else:
+            return f"{f_results} out of {f_amount}"

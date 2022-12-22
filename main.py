@@ -1,3 +1,4 @@
+import base64
 from flask import *
 from werkzeug.utils import *
 from flask_cors import CORS
@@ -306,7 +307,9 @@ def ProfileBadgeList(uid):
     if uid == str(session["Uid"]):
         data = list(UP.FetchUserdata(uid))
         badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(uid))]
-        badges = [badge + [BD.CalculateRarity(BD.FetchBadge(badge[0])[4])] for badge in badges ]
+        badges = [
+            badge + [BD.CalculateRarity(BD.FetchBadge(badge[0])[4])] for badge in badges
+        ]
         badges.sort(key=lambda x: x[-1])
         try:
             if "".join(data) == "NOTFOUND":
@@ -324,7 +327,7 @@ def ProfileBadgeList(uid):
             admin = False
         else:
             admin = True
-        
+
         badgeTime = []
         for times in badges:
             badgeTime.append(datetime.fromtimestamp(round(times[6])))
@@ -354,7 +357,46 @@ def ProfileBadgeList(uid):
 @app.route("/profile/<uid>/badges/<urlbadgeid>")
 def ProfileBadge(uid, urlbadgeid):
     if uid == str(session["Uid"]):
-        return render_template("profile/specific-badge.html")
+        data = list(UP.FetchUserdata(uid))
+        badge = BD.FetchBadge(base64.urlsafe_b64decode(urlbadgeid).decode())
+        rarity = BD.CalculateRarity(badge[4], normal=False)
+
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+        
+        badgeTime = datetime.fromtimestamp(round(badge[6]))
+
+        return render_template(
+            "profile/specific-badge.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            isloggedin=True,
+            isadmin=admin,
+            badge=badge,
+            badgeRarity=rarity,
+            badgeTime=badgeTime,
+            color1=Theme[1],
+            color2=Theme[2],
+            color3=Theme[3],
+            color4=Theme[4],
+            color5=Theme[5],
+        )
     else:
         return redirect(url_for("HomePage"))
 
@@ -439,4 +481,4 @@ def LogOut():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=("cert.pem", "key.pem"))
