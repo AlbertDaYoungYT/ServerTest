@@ -33,5 +33,7 @@ mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C
 
 DB.MainDB.commit()
 
-os.remove("data/friends.db")
-open("data/friends.db", "w")
+os.remove("./data/friends.db")
+os.remove("./data/notifications.db")
+open("./data/friends.db", "w")
+open("./data/notifications.db", "w")

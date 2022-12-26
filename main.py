@@ -354,6 +354,11 @@ def ProfileBadgeList(uid):
         return redirect(url_for("HomePage"))
 
 
+@app.route("/addfriend/<uid>")
+def AddFriend(uid):
+    return ""
+
+
 @app.route("/profile/<uid>/badges/<urlbadgeid>")
 def ProfileBadge(uid, urlbadgeid):
     if uid == str(session["Uid"]):
