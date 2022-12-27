@@ -1,6 +1,4 @@
 from config import *
-import matplotlib.pyplot as plt
-import numpy as np
 from math import *
 
 
@@ -26,8 +24,3 @@ def calculate_market_price(supply: int, demand: int, base_price) -> float:
     else:
         return base_price
 
-
-
-market_price = calculate_market_price(supply=100, demand=100, base_price=100)
-
-print(market_price)
