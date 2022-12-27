@@ -1,5 +1,5 @@
 import db as DB
-import time
+import modules.time as time
 
 def FetchTheme(ID):
     cursor = DB.MainDB.cursor()

@@ -1,7 +1,7 @@
 import modules.BadgeEncryptionAlgo as BEA
 import db as DB
 import base64
-import time
+import modules.time as time
 
 def CreateBadge(Name, Description, Type, ImageID):
     cursor = DB.MainDB.cursor()
@@ -15,7 +15,7 @@ def CreateBadge(Name, Description, Type, ImageID):
 def SetBadgeToUser(BID, UID):
     cursor = DB.MainDB.cursor()
 
-    cursor.execute(f"INSERT INTO badgeowners (OwnerID, BadgeID, achievementDate) VALUES ('{UID}', '{BID}', '{time.time()}')")
+    cursor.execute(f"INSERT INTO badgeowners (OwnerID, BadgeID, achievementDate) VALUES ('{UID}', '{BID}', '{time.utime()}')")
 
     DB.MainDB.commit()
 

@@ -55,12 +55,12 @@ def AdminHome():
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
-        except Exception:
+        except Exception as e:
             pass
 
         try:
             Theme = session["theme"]
-        except Exception:
+        except Exception as e:
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -150,12 +150,12 @@ def HomePage():
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
-        except Exception:
+        except Exception as e:
             pass
 
         try:
             Theme = session["theme"]
-        except Exception:
+        except Exception as e:
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -190,12 +190,12 @@ def ProfileURL(uid):
             try:
                 if "".join(data) == "NOTFOUND":
                     return redirect(url_for("LogOut"))
-            except Exception:
+            except Exception as e:
                 pass
 
             try:
                 Theme = session["theme"]
-            except Exception:
+            except Exception as e:
                 Theme = "default"
             Theme = T.FetchTheme(Theme)
 
@@ -223,7 +223,7 @@ def ProfileURL(uid):
                 color4=Theme[4],
                 color5=Theme[5],
             )
-    except Exception:
+    except Exception as e:
         pass
 
     return redirect(url_for("HomePage"))
@@ -238,12 +238,12 @@ def EditProfile(uid):
             try:
                 if "".join(data) == "NOTFOUND":
                     return redirect(url_for("LogOut"))
-            except Exception:
+            except Exception as e:
                 pass
 
             try:
                 Theme = session["theme"]
-            except Exception:
+            except Exception as e:
                 Theme = "default"
             Theme = T.FetchTheme(Theme)
 
@@ -271,7 +271,7 @@ def EditProfile(uid):
                 color4=Theme[4],
                 color5=Theme[5],
             )
-    except Exception:
+    except Exception as e:
         pass
 
     return redirect(url_for("ProfileURL", uid=data[0]))
@@ -314,12 +314,12 @@ def ProfileBadgeList(uid):
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
-        except Exception:
+        except Exception as e:
             pass
 
         try:
             Theme = session["theme"]
-        except Exception:
+        except Exception as e:
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -327,10 +327,6 @@ def ProfileBadgeList(uid):
             admin = False
         else:
             admin = True
-
-        badgeTime = []
-        for times in badges:
-            badgeTime.append(datetime.fromtimestamp(round(times[6])))
 
         return render_template(
             "profile/badge.html",
@@ -369,12 +365,12 @@ def ProfileBadge(uid, urlbadgeid):
         try:
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
-        except Exception:
+        except Exception as e:
             pass
 
         try:
             Theme = session["theme"]
-        except Exception:
+        except Exception as e:
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -466,7 +462,8 @@ def ConfirmSignup():
                 )
 
                 return redirect(url_for("HomePage"))
-        except Exception:
+        except Exception as e:
+            print(e)
             flash("Some fields are not filled out correctly")
             return redirect(url_for("SignUp"))
 

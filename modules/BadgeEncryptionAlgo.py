@@ -4,7 +4,7 @@ from requests import get
 from base64 import *
 import platform
 import hashlib
-import time
+import modules.time as time
 
 
 def GenerateID():
@@ -94,7 +94,7 @@ def DecodeID(ID, time_of_creation):
                 break
             else:
                 pass
-        except Exception:
+        except Exception as e:
             pass
 
     [ ID.insert(loc, " ") for loc in one_locs]

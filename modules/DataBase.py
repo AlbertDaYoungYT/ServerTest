@@ -1,9 +1,9 @@
 import db as DB
-import time
+import modules.time as time
 
 def CreateUser(ID, DisplayName, Username, PwdHash, bday):
     cursor = DB.MainDB.cursor()
-    cursor.execute(f"INSERT INTO users (ID, Username, PwdHash, CreationDate) VALUES ('{ID}', '{Username}', '{PwdHash}', '{time.time()}')")
+    cursor.execute(f"INSERT INTO users (ID, Username, PwdHash, CreationDate) VALUES ('{ID}', '{Username}', '{PwdHash}', '{time.utime()}')")
     cursor.execute(f"INSERT INTO userdata (ID, DisplayName, ProfileIMG, Description, Birthday, GCoins, Credits, isadmin) VALUES ('{ID}', '{DisplayName}', 'default.png', '', '{bday}', 0, 0, 'False')")
     cursor.execute(f"INSERT INTO euserdata (ID, Address, Email, Phone, Fullname) VALUES ('{ID}', '', '', '', '')")
 
