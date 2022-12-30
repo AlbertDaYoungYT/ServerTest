@@ -16,6 +16,118 @@
   <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
+    .notification-ui a:after {
+        display: none;
+    }
+
+    .notification-ui_icon {
+        position: relative;
+    }
+
+    .notification-ui_icon .unread-notification {
+        display: inline-block;
+        height: 7px;
+        width: 7px;
+        border-radius: 7px;
+        background-color: #66BB6A;
+        position: absolute;
+        top: 7px;
+        left: 12px;
+    }
+
+    @media (min-width: 900px) {
+        .notification-ui_icon .unread-notification {
+            left: 20px;
+        }
+    }
+
+    .notification-ui_dd {
+        padding: 0;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 5px 20px -3px rgba(0, 0, 0, 0.16);
+        box-shadow: 0 5px 20px -3px rgba(0, 0, 0, 0.16);
+        border: 0;
+        max-width: 400px;
+    }
+
+    @media (min-width: 900px) {
+        .notification-ui_dd {
+            min-width: 400px;
+            position: absolute;
+            left: -192px;
+            top: 70px;
+        }
+    }
+
+    .notification-ui_dd:after {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: calc(50% - 7px);
+        border-top: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid #fff;
+        border-left: 15px solid transparent;
+    }
+
+    .notification-ui_dd .notification-ui_dd-header {
+        border-bottom: 1px solid #ddd;
+        padding: 15px;
+    }
+
+    .notification-ui_dd .notification-ui_dd-header h3 {
+        margin-bottom: 0;
+    }
+
+    .notification-ui_dd .notification-ui_dd-content {
+        max-height: 500px;
+        overflow: auto;
+    }
+
+    .notification-list {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        align-items: left;
+        justify-content: left;
+        padding: 20px 0;
+        margin: 0 25px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .notification-list--unread {
+        position: relative;
+    }
+
+    .notification-list--unread:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -25px;
+        height: calc(100% + 1px);
+        border-left: 2px solid #29B6F6;
+    }
+
+    .notification-list .notification-list_img img {
+        height: 48px;
+        width: 48px;
+        border-radius: 0px;
+        margin-right: 20px;
+    }
+
+    .notification-list .notification-list_detail p {
+        margin-bottom: 5px;
+        line-height: 1.2;
+    }
+
+    .notification-list .notification-list_feature-img img {
+        height: 48px;
+        width: 48px;
+        border-radius: 5px;
+        margin-left: 20px;
+    }
     .dot {
       height: 25px;
       width: 25px;
@@ -92,35 +204,59 @@
       background-color: #FFF;
     }
 
+    .notifier-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
 
 
     .heads {
-      background-color: {{color4}} !important;
+      background-color: {{Theme[4]}} !important;
+    }
+
+    .dropdown-menu {
+      background-color: {{Theme[6]}};
+      color: {{Theme[2]}};
+    }
+
+    .dropdown-item {
+      color: {{Theme[2]}};
+    }
+
+    .dropdown-divider {
+      background-color: {{Theme[7]}};
+    }
+
+    .notification-ui-content {
+      background-color: {{Theme[1]}};
+      color: {{Theme[2]}};
     }
 
     .bodys {
-      background-color: {{color1}};
-      color: {{color2}};
+      background-color: {{Theme[1]}};
+      color: {{Theme[2]}};
     }
 
     .nav-pills .nav-link.active {
-      background-color: {{color5}};
+      background-color: {{Theme[5]}};
     }
 
     .navin {
-      color: {{color5}};
+      color: {{Theme[5]}};
     }
 
     .btn-primary {
-      background-color: {{color5}};
+      background-color: {{Theme[5]}};
     }
 
     .fillbtn {
-    	background-color: {{color5}};
+    	background-color: {{Theme[5]}};
     }
 
     .normbtn {
-      color: {{color5}};
+      color: {{Theme[5]}};
     }
   </style>
 
@@ -128,12 +264,11 @@
   <!-- Custom styles for this template -->
   <link href="/static/css/index.css" rel="stylesheet">
 </head>
-
 <header class="p-3 text-bg-trans heads">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-        <section> 
+        <section>
 
         </section>
       </a>
@@ -147,6 +282,48 @@
       </ul>
 
       {% if isloggedin %}
+      <div class="dropdown-center text-end">
+        {% if noNotifiers %}
+        <a class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+          aria-expanded="false" onclick="alert('INFO: No Notifications :(');" style="cursor: pointer;">
+          <img src="/static/favicons/notifier/bell.png" width="24" height="24">
+        </a>
+        {% else %}
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <img src="/static/favicons/notifier/notification.png" width="24" height="24">
+        </a>
+        <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown">
+          <div class="notification-ui-header">
+            <h4 class="text-center">Notifications</h4>
+          </div>
+          {% for Notifier in Notifications %}
+          <div class="notification-ui-content" style="width: 450px;align-content: left;">
+            <div class="notification-list">
+              <div class="notification-list_img">
+                {% if Notifier[4] == "FriendRQT" %}
+                <img src="/static/favicons/notifier/friendrqt.png">
+                {% else %}
+                {% endif %}
+              </div>
+              <div class="notification-list_detail">
+                <p onclick="window.location.href='/profile/{{ Notifier[2] }}';">{{Notifier[1] | safe}}</p>
+                <p><small>{{Notifier[5]}}</small></p>
+                {% if Notifier[4] == "FriendRQT" %}
+                <div class="notifier-button">
+                  <p><small onclick="window.location.href='/accept/friendrqt/{{ Notifier[2] }}';" style="cursor: pointer;">Accept</small></p>
+                  <p><small onclick="window.location.href='/delete/notification/{{ Notifier[0] }}';" style="cursor: pointer;">Deny</small></p>
+                </div>
+                {% endif %}
+              </div>
+              <div class="notification-list_feature-img">
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
       <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
           aria-expanded="false">
@@ -156,7 +333,8 @@
           <li>
             <div style="text-align: center;">
               {% for badge in Badges %}
-              <a class="dot" style="background-image: url({{badge[5]}}); background-size: contain;" href="/profile/{{Uid}}/badges/{{badge[1]}}"></a>
+              <a class="dot" style="background-image: url({{badge[5]}}); background-size: contain;"
+                href="/profile/{{Uid}}/badges/{{badge[1]}}"></a>
               {% endfor %}
             </div>
           </li>
@@ -165,7 +343,7 @@
           </li>
           <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/friendlist">Friends</a></li>
           <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/trades">Trades</a></li>
-          <li><a class="dropdown-item" href="/challenges">Challenges</a></li>
+          <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/challenges">Challenges</a></li>
           <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/transactions">Shop Transactions</a></li>
           {% if isadmin %}
           <li>
@@ -277,6 +455,16 @@
   <script src="/static/js/bootstrap.bundle.min.js"
     
     crossorigin="anonymous"></script>
+
+    <script>
+      document.getElementById("#offcanvas1").onclick(function() {
+        var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
+        var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
+          return new bootstrap.Offcanvas(offcanvasEl)
+        })
+
+      });
+    </script>
 </body>
 
 </html>

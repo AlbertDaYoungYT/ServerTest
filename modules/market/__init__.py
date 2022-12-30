@@ -1,2 +1,2 @@
-import config
-import logic
+import modules.market.config
+import modules.market.logic

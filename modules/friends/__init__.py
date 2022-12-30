@@ -1,2 +1,1 @@
-import newFriend
-import request
+import modules.friends.newFriend

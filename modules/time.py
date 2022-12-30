@@ -1,5 +1,5 @@
 from datetime import datetime
-import modules.time as time
+from time import *
 
 def utime():
     import time

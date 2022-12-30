@@ -1,17 +1,23 @@
+from __future__ import division
+
 import base64
 from flask import *
 from werkzeug.utils import *
 from flask_cors import CORS
-from datetime import *
+from datetime import datetime, timedelta
 import hashlib
 import uuid
+import html
 import os
 
 import data.text as Text
 import modules.DataBase as Data
 import modules.UserProfile as UP
+import modules.notifications as N
+import modules.friends as F
 import modules.BadgeDB as BD
 import modules.Theme as T
+import modules.time as time
 import data.settings as S
 import db as DB
 
@@ -24,6 +30,40 @@ app.secret_key = S.SECRET
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
+
+
+
+def seconds_to_hhmmss(seconds):
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%d:%02d:%02d" % (hour, minutes, seconds)
+
+def calculate_notifier_times(Notifiers):
+    NotifierTimes            = [ x[-1] for x in Notifiers]
+    NotifierTimesDiff        = [ time.time()-x for x in NotifierTimes]
+    NotifierTimesDiffText    = [ seconds_to_hhmmss(x) for x in NotifierTimesDiff ]
+
+    x = []
+    for Notifier in range(len(Notifiers)):
+        n = [ int(x) for x in NotifierTimesDiffText[Notifier].split(":") ]
+        if n[2] > 0 and n[1] < 1:
+            x.append(str(n[2]) + " Seconds Ago")
+        elif n[1] > 0 and n[0] < 1:
+            x.append(str(n[1] + round(n[2]/100)) + " Minutes Ago")
+        elif n[0] > 0:
+            x.append(str(n[0] + round(n[1]/100)) + " Hours Ago")
+        else:
+            x.append(str(time.todate(NotifierTimes[Notifier])).split()[0])
+    
+    final = []
+    for Notifier in range(len(Notifiers)):
+        final.append(Notifiers[Notifier][0:-1] + [x[Notifier]])
+
+    return final
+
 
 
 @app.route("/about")
@@ -82,11 +122,7 @@ def AdminHome():
             Email=edata[3],
             Phone=edata[2],
             Address=edata[1],
-            color1=Theme[1],
-            color2=Theme[2],
-            color3=Theme[3],
-            color4=Theme[4],
-            color5=Theme[5],
+            Theme=Theme
         )
 
 
@@ -138,11 +174,7 @@ def HomePage():
             UserProfile="Test",
             isloggedin=False,
             isadmin=False,
-            color1=Theme[1],
-            color2=Theme[2],
-            color3=Theme[3],
-            color4=Theme[4],
-            color5=Theme[5],
+            Theme=Theme
         )
     else:
         data = list(UP.FetchUserdata(Uid))
@@ -163,6 +195,13 @@ def HomePage():
             admin = False
         else:
             admin = True
+        
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+        
+        Notifications = calculate_notifier_times(Notifications)
 
         return render_template(
             "index.html",
@@ -173,11 +212,9 @@ def HomePage():
             isloggedin=True,
             isadmin=admin,
             Badges=badges,
-            color1=Theme[1],
-            color2=Theme[2],
-            color3=Theme[3],
-            color4=Theme[4],
-            color5=Theme[5],
+            Notifications=[ [ html.unescape(str(y)) for y in x] for x in Notifications ],
+            noNotifiers=NoNotifiers,
+            Theme=Theme
         )
 
 
@@ -212,16 +249,53 @@ def ProfileURL(uid):
                 UserProfile=f"{data[0]}",
                 Description=data[3],
                 isloggedin=True,
+                isguest=False,
                 isadmin=admin,
                 Fullname=edata[4],
                 Email=edata[3],
                 Phone=edata[2],
                 Address=edata[1],
-                color1=Theme[1],
-                color2=Theme[2],
-                color3=Theme[3],
-                color4=Theme[4],
-                color5=Theme[5],
+                Theme=Theme
+            )
+        else:
+            data = list(UP.FetchUserdata(uid))
+            edata = list(UP.FetchEUserdata(uid))
+            try:
+                if "".join(data) == "NOTFOUND":
+                    return redirect(url_for("LogOut"))
+            except Exception as e:
+                pass
+
+            try:
+                Theme = session["theme"]
+            except Exception as e:
+                Theme = "default"
+            Theme = T.FetchTheme(Theme)
+
+            if data[-1] == "False":
+                admin = False
+            else:
+                admin = True
+            
+            SentFriendRequest = N.friend.VerifyRequest(session["Uid"], uid)
+
+            
+            return render_template(
+                "profile/profile.html",
+                Uid=data[0],
+                UserProfileSrc=f"/static/favicons/{data[2]}",
+                UserName=data[1],
+                UserProfile=f"{data[0]}",
+                Description=data[3],
+                isloggedin=True,
+                isguest=True,
+                requestsent=SentFriendRequest,
+                isadmin=admin,
+                Fullname=edata[4],
+                Email=edata[3],
+                Phone=edata[2],
+                Address=edata[1],
+                Theme=Theme
             )
     except Exception as e:
         pass
@@ -265,11 +339,7 @@ def EditProfile(uid):
                 Email=edata[3],
                 Phone=edata[2],
                 Address=edata[1],
-                color1=Theme[1],
-                color2=Theme[2],
-                color3=Theme[3],
-                color4=Theme[4],
-                color5=Theme[5],
+                Theme=Theme
             )
     except Exception as e:
         pass
@@ -340,11 +410,7 @@ def ProfileBadgeList(uid):
             BadgeTime=badgeTime,
             len=len(badgeTime),
             BadgeRanks=S.RARITY_RANKS,
-            color1=Theme[1],
-            color2=Theme[2],
-            color3=Theme[3],
-            color4=Theme[4],
-            color5=Theme[5],
+            Theme=Theme
         )
     else:
         return redirect(url_for("HomePage"))
@@ -352,7 +418,8 @@ def ProfileBadgeList(uid):
 
 @app.route("/addfriend/<uid>")
 def AddFriend(uid):
-    return ""
+    N.friend.SendRequest(session["Uid"], uid)
+    return redirect(url_for("ProfileURL", uid=uid))
 
 
 @app.route("/profile/<uid>/badges/<urlbadgeid>")
@@ -392,15 +459,36 @@ def ProfileBadge(uid, urlbadgeid):
             badge=badge,
             badgeRarity=rarity,
             badgeTime=badgeTime,
-            color1=Theme[1],
-            color2=Theme[2],
-            color3=Theme[3],
-            color4=Theme[4],
-            color5=Theme[5],
+            Theme=Theme
         )
     else:
         return redirect(url_for("HomePage"))
 
+
+@app.route("/delete/notification/<nid>")
+def DeleteNotifier(nid):
+    if N.delete.VerifyNotification(session["Uid"], nid):
+        N.delete.Delete(session["Uid"], nid)
+        return redirect(url_for("HomePage"))
+    else:
+        return redirect(url_for("HomePage"))
+
+
+@app.route("/accept/friendrqt/<fid>")
+def AcceptFriendRQT(fid):
+    if N.friend.VerifyRequest(fid, session["Uid"]):
+        F.newFriend.CreateFriend(session["Uid"], fid)
+        return redirect(url_for("HomePage"))
+    else:
+        return redirect(url_for("HomePage"))
+
+@app.route("/cancel/friendrqt/<fid>")
+def DeleteFriendRQT(fid):
+    if N.friend.VerifyRequest(session["Uid"], fid):
+        N.friend.CancelRequest(session["Uid"], fid)
+        return redirect(url_for("ProfileURL", uid=fid))
+    else:
+        return redirect(url_for("ProfileURL", uid=fid))
 
 @app.route("/shop")
 def Shop():
@@ -469,6 +557,11 @@ def ConfirmSignup():
 
     flash("User already exists")
     return redirect(url_for("SignUp"))
+
+@app.route("/test")
+def Test():
+    N.friend.SendRequest(session["Uid"], "fcc332f9-884e-11ed-aa30-001a7dda7111")
+    return redirect(url_for("HomePage"))
 
 
 @app.route("/signup")
