@@ -538,6 +538,8 @@ def ConfirmSignup():
                 (request.form["bday"].split("-"))[0] != "00"
                 and (request.form["bday"].split("-"))[1] != "00"
                 and (request.form["bday"].split("-"))[2] != "0000"
+                and not int((request.form["bday"].split("-"))[0]) > 33
+                and not int((request.form["bday"].split("-"))[1]) > 13
                 and not int((request.form["bday"].split("-"))[2]) < int(date.today().year) - 123
             ):
                 Uid = uuid.uuid1()
