@@ -99,8 +99,8 @@
         <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd" required>
         <label for="floatingPassword">Password</label>
       </div>
-	    <input type="text" class="form-control" id="floatingInput" name="bday" placeholder="DD-MM-YYYY" required 
-	    title="Enter a date in this format DD-MM-YYYY"/>
+	    <input type="text" class="form-control " id="date-form" name="bday" placeholder="DD-MM-YYYY" required 
+	    title="Enter a date in this format DD-MM-YYYY" maxlength="10"/>
 	  <br>
 	  {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -130,5 +130,22 @@
   <script src="/static/js/anime.min.js"></script>
   <script src="/static/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#date-form').keydown(function (e) {
+      var key = e.charCode || e.keyCode || 0;
+      $text = $(this); 
+      if (key !== 8 && key !== 9) {
+          if ($text.val().length === 2) {
+              $text.val($text.val() + '-');
+          }
+          if ($text.val().length === 5) {
+              $text.val($text.val() + '-');
+          }
+
+      }
+      })
+    });
+  </script>
 </body>
 </html>

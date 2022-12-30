@@ -4,7 +4,7 @@ import base64
 from flask import *
 from werkzeug.utils import *
 from flask_cors import CORS
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import hashlib
 import uuid
 import html
@@ -535,8 +535,10 @@ def ConfirmSignup():
     ):
         try:
             if (
-                len(request.form["bday"]) == 10
-                and len(request.form["bday"].split("-")) == 3
+                (request.form["bday"].split("-"))[0] != "00"
+                and (request.form["bday"].split("-"))[1] != "00"
+                and (request.form["bday"].split("-"))[2] != "0000"
+                and not int((request.form["bday"].split("-"))[2]) < int(date.today().year) - 123
             ):
                 Uid = uuid.uuid1()
                 session["Uid"] = Uid
@@ -550,9 +552,12 @@ def ConfirmSignup():
                 )
 
                 return redirect(url_for("HomePage"))
+            else:
+                flash("No way thats your bithday")
+                return redirect(url_for("SignUp"))
         except Exception as e:
             print(e)
-            flash("Some fields are not filled out correctly")
+            flash("An Error Occurred")
             return redirect(url_for("SignUp"))
 
     flash("User already exists")
