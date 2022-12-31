@@ -9,6 +9,7 @@ import hashlib
 import uuid
 import html
 import os
+import re
 
 import data.text as Text
 import modules.DataBase as Data
@@ -25,12 +26,19 @@ app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = "static/favicons/uploads"
+EMAIL_REGEX = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 
 app.secret_key = S.SECRET
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
+
+def check_email(email):
+    if re.fullmatch(EMAIL_REGEX, email):
+        print("Valid Email")
+    else:
+        print("Invalid Email")
 
 
 def seconds_to_hhmmss(seconds):
@@ -41,29 +49,29 @@ def seconds_to_hhmmss(seconds):
     seconds %= 60
     return "%d:%02d:%02d" % (hour, minutes, seconds)
 
+
 def calculate_notifier_times(Notifiers):
-    NotifierTimes            = [ x[-1] for x in Notifiers]
-    NotifierTimesDiff        = [ time.time()-x for x in NotifierTimes]
-    NotifierTimesDiffText    = [ seconds_to_hhmmss(x) for x in NotifierTimesDiff ]
+    NotifierTimes = [x[-1] for x in Notifiers]
+    NotifierTimesDiff = [time.time() - x for x in NotifierTimes]
+    NotifierTimesDiffText = [seconds_to_hhmmss(x) for x in NotifierTimesDiff]
 
     x = []
     for Notifier in range(len(Notifiers)):
-        n = [ int(x) for x in NotifierTimesDiffText[Notifier].split(":") ]
+        n = [int(x) for x in NotifierTimesDiffText[Notifier].split(":")]
         if n[2] > 0 and n[1] < 1:
             x.append(str(n[2]) + " Seconds Ago")
         elif n[1] > 0 and n[0] < 1:
-            x.append(str(n[1] + round(n[2]/100)) + " Minutes Ago")
+            x.append(str(n[1] + round(n[2] / 100)) + " Minutes Ago")
         elif n[0] > 0:
-            x.append(str(n[0] + round(n[1]/100)) + " Hours Ago")
+            x.append(str(n[0] + round(n[1] / 100)) + " Hours Ago")
         else:
             x.append(str(time.todate(NotifierTimes[Notifier])).split()[0])
-    
+
     final = []
     for Notifier in range(len(Notifiers)):
         final.append(Notifiers[Notifier][0:-1] + [x[Notifier]])
 
     return final
-
 
 
 @app.route("/about")
@@ -122,7 +130,7 @@ def AdminHome():
             Email=edata[3],
             Phone=edata[2],
             Address=edata[1],
-            Theme=Theme
+            Theme=Theme,
         )
 
 
@@ -172,9 +180,11 @@ def HomePage():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
+            SiteData=Text.homeTextPageNologin,
             isloggedin=False,
             isadmin=False,
-            Theme=Theme
+            Theme=Theme,
+            Page="Home",
         )
     else:
         data = list(UP.FetchUserdata(Uid))
@@ -195,12 +205,12 @@ def HomePage():
             admin = False
         else:
             admin = True
-        
+
         Notifications = N.friend.FetchNotifiers(Uid)
         NoNotifiers = False
         if Notifications == []:
             NoNotifiers = True
-        
+
         Notifications = calculate_notifier_times(Notifications)
 
         return render_template(
@@ -212,9 +222,9 @@ def HomePage():
             isloggedin=True,
             isadmin=admin,
             Badges=badges,
-            Notifications=[ [ html.unescape(str(y)) for y in x] for x in Notifications ],
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
             noNotifiers=NoNotifiers,
-            Theme=Theme
+            Theme=Theme,
         )
 
 
@@ -255,7 +265,7 @@ def ProfileURL(uid):
                 Email=edata[3],
                 Phone=edata[2],
                 Address=edata[1],
-                Theme=Theme
+                Theme=Theme,
             )
         else:
             data = list(UP.FetchUserdata(uid))
@@ -276,10 +286,9 @@ def ProfileURL(uid):
                 admin = False
             else:
                 admin = True
-            
+
             SentFriendRequest = N.friend.VerifyRequest(session["Uid"], uid)
 
-            
             return render_template(
                 "profile/profile.html",
                 Uid=data[0],
@@ -295,7 +304,7 @@ def ProfileURL(uid):
                 Email=edata[3],
                 Phone=edata[2],
                 Address=edata[1],
-                Theme=Theme
+                Theme=Theme,
             )
     except Exception as e:
         pass
@@ -339,7 +348,7 @@ def EditProfile(uid):
                 Email=edata[3],
                 Phone=edata[2],
                 Address=edata[1],
-                Theme=Theme
+                Theme=Theme,
             )
     except Exception as e:
         pass
@@ -410,7 +419,7 @@ def ProfileBadgeList(uid):
             BadgeTime=badgeTime,
             len=len(badgeTime),
             BadgeRanks=S.RARITY_RANKS,
-            Theme=Theme
+            Theme=Theme,
         )
     else:
         return redirect(url_for("HomePage"))
@@ -445,7 +454,7 @@ def ProfileBadge(uid, urlbadgeid):
             admin = False
         else:
             admin = True
-        
+
         badgeTime = datetime.fromtimestamp(round(badge[6]))
 
         return render_template(
@@ -459,7 +468,7 @@ def ProfileBadge(uid, urlbadgeid):
             badge=badge,
             badgeRarity=rarity,
             badgeTime=badgeTime,
-            Theme=Theme
+            Theme=Theme,
         )
     else:
         return redirect(url_for("HomePage"))
@@ -482,6 +491,7 @@ def AcceptFriendRQT(fid):
     else:
         return redirect(url_for("HomePage"))
 
+
 @app.route("/cancel/friendrqt/<fid>")
 def DeleteFriendRQT(fid):
     if N.friend.VerifyRequest(session["Uid"], fid):
@@ -489,6 +499,7 @@ def DeleteFriendRQT(fid):
         return redirect(url_for("ProfileURL", uid=fid))
     else:
         return redirect(url_for("ProfileURL", uid=fid))
+
 
 @app.route("/shop")
 def Shop():
@@ -525,7 +536,18 @@ def ConfirmLogin():
 
 @app.route("/signin")
 def SignIn():
-    return render_template("login.html")
+    Theme = T.FetchDefaultTheme()
+    return render_template(
+        "login.html",
+        UserProfileSrc="Test",
+        UserName="Test",
+        UserProfile="Test",
+        SiteData=Text.homeTextPageNologin,
+        isloggedin=False,
+        isadmin=False,
+        Theme=Theme,
+        Page="SignIn",
+    )
 
 
 @app.route("/confirmsignup", methods=["POST"])
@@ -540,7 +562,8 @@ def ConfirmSignup():
                 and (request.form["bday"].split("-"))[2] != "0000"
                 and not int((request.form["bday"].split("-"))[0]) > 33
                 and not int((request.form["bday"].split("-"))[1]) > 13
-                and not int((request.form["bday"].split("-"))[2]) < int(date.today().year) - 123
+                and not int((request.form["bday"].split("-"))[2])
+                < int(date.today().year) - 123
             ):
                 Uid = uuid.uuid1()
                 session["Uid"] = Uid
@@ -565,6 +588,7 @@ def ConfirmSignup():
     flash("User already exists")
     return redirect(url_for("SignUp"))
 
+
 @app.route("/test")
 def Test():
     N.friend.SendRequest(session["Uid"], "fcc332f9-884e-11ed-aa30-001a7dda7111")
@@ -573,13 +597,40 @@ def Test():
 
 @app.route("/signup")
 def SignUp():
-    return render_template("signup.html")
+    Theme = T.FetchDefaultTheme()
+    return render_template(
+        "signup.html",
+        UserProfileSrc="Test",
+        UserName="Test",
+        UserProfile="Test",
+        SiteData=Text.homeTextPageNologin,
+        isloggedin=False,
+        isadmin=False,
+        Theme=Theme,
+        Page="SignUp",
+    )
 
 
 @app.route("/logout")
 def LogOut():
     session.clear()
     return redirect(url_for("HomePage"))
+
+
+@app.errorhandler(404)
+def invalid_route(e):
+    Theme = T.FetchDefaultTheme()
+    return render_template(
+        "404.html",
+        UserProfileSrc="Test",
+        UserName="Test",
+        UserProfile="Test",
+        SiteData=Text.homeTextPageNologin,
+        isloggedin=False,
+        isadmin=False,
+        Theme=Theme,
+        Page="404",
+    )
 
 
 if __name__ == "__main__":

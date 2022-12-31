@@ -38,4 +38,4 @@ mycursor.execute("DROP TABLE IF EXISTS users")
 mycursor.execute("CREATE TABLE `allc` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Trigger` TEXT NOT NULL,`Image` TEXT NOT NULL,`Reward` INT NOT NULL,`CreationDate` INT NOT NULL)")
 mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C2` TEXT NOT NULL,`C3` TEXT NOT NULL,`C4` TEXT NOT NULL,`C5` TEXT NOT NULL)")
 
-DB.MainDB.commit()
+DB.ChallengesDB.commit()

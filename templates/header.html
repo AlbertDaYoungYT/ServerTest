@@ -1,0 +1,142 @@
+<header class="p-3 text-bg-trans heads">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <section>
+
+                </section>
+            </a>
+
+            <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                {% if Page == "Home" %}
+                <li class="nav-item"><a href="/" class="nav-link active navac">Home</a></li>
+                {% else %}
+                <li class="nav-item"><a href="/" class="nav-link navac">Home</a></li>
+                {% endif %}
+                
+                {% if Page == "Games" %}
+                <li class="nav-item"><a href="/games" class="nav-link active navac">Games</a></li>
+                {% else %}
+                <li class="nav-item"><a href="/games" class="nav-link navac">Games</a></li>
+                {% endif %}
+                
+                {% if Page == "Shop" %}
+                <li class="nav-item"><a href="/shop" class="nav-link active navac">Shop</a></li>
+                {% else %}
+                <li class="nav-item"><a href="/shop" class="nav-link navac">Shop</a></li>
+                {% endif %}
+                
+                {% if Page == "Leaderboard" %}
+                <li class="nav-item"><a href="/leaderboard" class="nav-link active navac">Leaderboard</a></li>
+                {% else %}
+                <li class="nav-item"><a href="/leaderboard" class="nav-link navac">Leaderboard</a></li>
+                {% endif %}
+                
+                {% if Page == "About" %}
+                <li class="nav-item"><a href="/about" class="nav-link active navac">About</a></li>
+                {% else %}
+                <li class="nav-item"><a href="/about" class="nav-link navac">About</a></li>
+                {% endif %}
+            </ul>
+
+            {% if isloggedin %}
+            <div class="dropdown-center text-end">
+                {% if noNotifiers %}
+                <a class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false" onclick="alert('INFO: No Notifications :(');" style="cursor: pointer;">
+                    <img src="/static/favicons/notifier/bell.png" width="24" height="24">
+                </a>
+                {% else %}
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="/static/favicons/notifier/notification.png" width="24" height="24">
+                </a>
+                <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown">
+                    <div class="notification-ui-header">
+                        <h4 class="text-center">Notifications</h4>
+                    </div>
+                    {% for Notifier in Notifications %}
+                    <div class="notification-ui-content" style="width: 450px;align-content: left;">
+                        <div class="notification-list">
+                            <div class="notification-list_img">
+                                {% if Notifier[4] == "FriendRQT" %}
+                                <img src="/static/favicons/notifier/friendrqt.png">
+                                {% else %}
+                                {% endif %}
+                            </div>
+                            <div class="notification-list_detail">
+                                <p onclick="window.location.href='/profile/{{ Notifier[2] }}';">{{Notifier[1] | safe}}
+                                </p>
+                                <p><small>{{Notifier[5]}}</small></p>
+                                {% if Notifier[4] == "FriendRQT" %}
+                                <div class="notifier-button">
+                                    <p><small onclick="window.location.href='/accept/friendrqt/{{ Notifier[2] }}';"
+                                            style="cursor: pointer;">Accept</small></p>
+                                    <p><small onclick="window.location.href='/delete/notification/{{ Notifier[0] }}';"
+                                            style="cursor: pointer;">Deny</small></p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="notification-list_feature-img">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="{{ UserProfileSrc }}" alt="{{ UserName }}" class="rounded-circle" width="32" height="32">
+                </a>
+                <ul class="dropdown-menu text-small">
+                    <li>
+                        <div style="text-align: center;">
+                            {% for badge in Badges %}
+                            <a class="dot" style="background-image: url({{badge[5]}}); background-size: contain;"
+                                href="/profile/{{Uid}}/badges/{{badge[1]}}"></a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/friendlist">Friends</a></li>
+                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/trades">Trades</a></li>
+                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/challenges">Challenges</a></li>
+                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/transactions">Shop Transactions</a>
+                    </li>
+                    {% if isadmin %}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/admin/homepage">Admin Panel</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% else %}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% endif %}
+                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}">Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="text-end">
+                <form action="/signin">
+                    <input type="submit" class="btn btn-outline-light me-2" value="Login" />
+                </form>
+            </div>
+            <div class="text-end">
+                <form action="/signup">
+                    <input type="submit" class="btn btn-warning" value="Signup"
+                        style="background-color: {{Theme[2]}};border-color: {{Theme[2]}};" />
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

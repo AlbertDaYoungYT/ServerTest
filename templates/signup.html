@@ -19,60 +19,72 @@
 
 
   <style>
-	label{margin-left: 20px;}
-	#datepicker{width:180px; margin: 0 20px 20px 20px;}
-	#datepicker > span:hover{cursor: pointer;}
 
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
+.btn-primary {
+  --bs-btn-color: {{Theme[2]}};
+  --bs-btn-hover-color: {{Theme[2]}};
+  --bs-btn-active-color: {{Theme[2]}};
+}
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
+.btn-outline-light {
+  --bs-btn-color: {{Theme[2]}};
+  --bs-btn-hover-color: {{Theme[1]}};
+  --bs-btn-active-color: {{Theme[2]}};
+  --bs-btn-hover-border-color: {{Theme[2]}};
+  --bs-btn-hover-bg: {{Theme[2]}};
+  --bs-btn-border-color: {{Theme[2]}};
+}
 
-    .b-example-divider {
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
+.heads {
+background-color: {{Theme[4]}} !important;
+}
 
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
+.footers {
+background-color: {{Theme[6]}} !important;
+}
 
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
+.dropdown-menu {
+background-color: {{Theme[6]}};
+color: {{Theme[2]}};
+}
 
-    .nav-scroller {
-      position: relative;
-      z-index: 2;
-      height: 2.75rem;
-      overflow-y: hidden;
-    }
+.dropdown-item {
+color: {{Theme[2]}};
+}
 
-    .nav-scroller .nav {
-      display: flex;
-      flex-wrap: nowrap;
-      padding-bottom: 1rem;
-      margin-top: -1px;
-      overflow-x: auto;
-      text-align: center;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    }
+.dropdown-divider {
+background-color: {{Theme[7]}};
+}
+
+.notification-ui-content {
+background-color: {{Theme[1]}};
+color: {{Theme[2]}};
+}
+
+.bodys {
+background-color: {{Theme[1]}};
+color: {{Theme[2]}};
+}
+
+.nav-pills .nav-link.active {
+background-color: {{Theme[5]}};
+}
+
+.navin {
+color: {{Theme[5]}};
+}
+
+.btn-primary {
+background-color: {{Theme[5]}};
+}
+
+.fillbtn {
+  background-color: {{Theme[5]}};
+}
+
+.normbtn {
+color: {{Theme[5]}};
+}
   </style>
 
 
@@ -80,7 +92,7 @@
   <link href="/static/css/signin.css" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="text-center bodys">
 
   <main class="form-signin w-100 m-auto">
     
@@ -115,20 +127,15 @@
       <a class="w-100 btn btn-lg btn-secondary" href="/">Home</a>
     </form>
   </main>
-
-
-
-
-  <!-- Bootstrap core JavaScript
-    ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    
     crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="/static/js/jquery-slim.min.js"><\/script>')</script>
   <script src="/static/js/popper.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <script src="/static/js/anime.min.js"></script>
   <script src="/static/js/bootstrap.bundle.min.js"
+    
     crossorigin="anonymous"></script>
   <script>
     $(function () {
