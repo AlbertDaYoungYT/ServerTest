@@ -1,11 +1,11 @@
 1   -     V           Add Logic to Rareness Ranks
 2   -     V           Finish the specific-badge.html file
-3   -     H           Finish the index.html file to copy to other index files
+3   -     V           Finish the index.html file to copy to other index files
 4   -     H           Create Friends list and features
 5   -     X           Add Inventory and items for collection or selling
 6   -     X           Create a Marketplace
 7   -     V           Add auto dashes in SignUp Form
-8   -     X           Add Titles to html
+8   -     V           Add Titles to html
 9   -     X           Fix Apply For Admin in profile
 10  -     X           Create the game server
 11  -     X           Add Lotto winnings

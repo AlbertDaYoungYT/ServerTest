@@ -13,10 +13,10 @@ DB.MainDB.commit()
 
 for x in range(10):
     BID = BD.CreateBadge(f"b{x}", f"be b{x}", "test", "trophy.png")
-    BD.SetBadgeToUser(BID, "c643abef-8211-11ed-95e6-001a7dda7111")
+    BD.SetBadgeToUser(BID, "d7e90f11-8943-11ed-90d9-001a7dda7111")
     print(BID)
 
 BID = BD.CreateBadge(f"b{x}", f"be b{x}", "damn", "trophy.png")
-BD.SetBadgeToUser(BID, "c643abef-8211-11ed-95e6-001a7dda7111")
+BD.SetBadgeToUser(BID, "d7e90f11-8943-11ed-90d9-001a7dda7111")
 BID = BD.CreateBadge(f"b{x}", f"be b{x}", "damn", "trophy.png")
-BD.SetBadgeToUser(BID, "c643abef-8211-11ed-95e6-001a7dda7111")
+BD.SetBadgeToUser(BID, "d7e90f11-8943-11ed-90d9-001a7dda7111")

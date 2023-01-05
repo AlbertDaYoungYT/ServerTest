@@ -6,12 +6,18 @@
 <body class="bodys">
   <main role="main" class="container">
     {% if isloggedin %}
+    <div class="px-4 py-5 my-5 text-center">
+      <h1 class="display-5 fw-bold">{{SiteWelcome}}</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">{{SiteData["SiteDiscription2"]}}</p>
+      </div>
+    </div>
     
     {% else %}
     <div class="px-4 py-5 my-5 text-center">
-      <h1 class="display-5 fw-bold">Welcome to {{SiteData["SiteName"]}}</h1>
+      <h1 class="display-5 fw-bold">Welcome to {{StaticData["SiteName"]}}</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">{{SiteData["SiteDiscription"]}}</p>
+        <p class="lead mb-4">{{SiteData["SiteDiscription1"]}}</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <a href="{{SiteData['SiteButton1'][1]}}"><button type="button" class="fillbtn btn btn-primary btn-lg px-4 gap-3">{{SiteData["SiteButton1"][0]}}</button></a>
           <a href="{{SiteData['SiteButton2'][1]}}"><button type="button" class="normbtn btn btn-outline-secondary btn-lg px-4">{{SiteData["SiteButton2"][0]}}</button></a>
@@ -41,15 +47,6 @@
 	{% endif %}
   </main>
   {% include "footer.html" %}
-    <script>
-      document.getElementById("#offcanvas1").onclick(function() {
-        var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
-        var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
-          return new bootstrap.Offcanvas(offcanvasEl)
-        })
-
-      });
-    </script>
 </body>
 
 </html>

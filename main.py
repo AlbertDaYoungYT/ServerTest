@@ -6,6 +6,7 @@ from werkzeug.utils import *
 from flask_cors import CORS
 from datetime import datetime, timedelta, date
 import hashlib
+import random
 import uuid
 import html
 import os
@@ -74,17 +75,143 @@ def calculate_notifier_times(Notifiers):
     return final
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/")
+def HomePage():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "index.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Home",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "index.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Home",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
 @app.route("/about")
 def About():
-    return render_template(
-        "about.html",
-        content=Text.aboutTextPage,
-        UserProfileSrc="Test",
-        UserName="Test",
-        UserProfile="Test",
-        isloggedin=True,
-        isadmin=False,
-    )
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "about.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.aboutTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="About",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "about.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.aboutTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="About",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
 
 
 @app.route("/admin")
@@ -170,64 +297,6 @@ def PostApplyForAdmin():
         return redirect(url_for("SignIn"))
 
 
-@app.route("/")
-def HomePage():
-    Uid = session.get("Uid")
-    if Uid == None:
-        Theme = T.FetchDefaultTheme()
-        return render_template(
-            "index.html",
-            UserProfileSrc="Test",
-            UserName="Test",
-            UserProfile="Test",
-            SiteData=Text.homeTextPageNologin,
-            isloggedin=False,
-            isadmin=False,
-            Theme=Theme,
-            Page="Home",
-        )
-    else:
-        data = list(UP.FetchUserdata(Uid))
-        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
-        try:
-            if "".join(data) == "NOTFOUND":
-                return redirect(url_for("LogOut"))
-        except Exception as e:
-            pass
-
-        try:
-            Theme = session["theme"]
-        except Exception as e:
-            Theme = "default"
-        Theme = T.FetchTheme(Theme)
-
-        if data[-1] == "False":
-            admin = False
-        else:
-            admin = True
-
-        Notifications = N.friend.FetchNotifiers(Uid)
-        NoNotifiers = False
-        if Notifications == []:
-            NoNotifiers = True
-
-        Notifications = calculate_notifier_times(Notifications)
-
-        return render_template(
-            "index.html",
-            Uid=data[0],
-            UserProfileSrc=f"/static/favicons/{data[2]}",
-            UserName=data[1],
-            UserProfile=f"{data[0]}",
-            isloggedin=True,
-            isadmin=admin,
-            Badges=badges,
-            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
-            noNotifiers=NoNotifiers,
-            Theme=Theme,
-        )
-
-
 @app.route("/profile/<uid>")
 def ProfileURL(uid):
     try:
@@ -310,6 +379,50 @@ def ProfileURL(uid):
         pass
 
     return redirect(url_for("HomePage"))
+
+
+@app.route("/profile/<uid>/inventory")
+def ProfileInventory(uid):
+    try:
+        if uid == str(session["Uid"]):
+            data = list(UP.FetchUserdata(uid))
+            edata = list(UP.FetchEUserdata(uid))
+            try:
+                if "".join(data) == "NOTFOUND":
+                    return redirect(url_for("LogOut"))
+            except Exception as e:
+                pass
+
+            try:
+                Theme = session["theme"]
+            except Exception as e:
+                Theme = "default"
+            Theme = T.FetchTheme(Theme)
+
+            if data[-1] == "False":
+                admin = False
+            else:
+                admin = True
+
+            return render_template(
+                "profile/inventory.html",
+                Uid=data[0],
+                UserProfileSrc=f"/static/favicons/{data[2]}",
+                UserName=data[1],
+                UserProfile=f"{data[0]}",
+                Description=data[3],
+                isloggedin=True,
+                isadmin=admin,
+                Fullname=edata[4],
+                Email=edata[3],
+                Phone=edata[2],
+                Address=edata[1],
+                Theme=Theme,
+            )
+    except Exception as e:
+        pass
+
+    return redirect(url_for("ProfileURL", uid=data[0]))
 
 
 @app.route("/profile/<uid>/edit")
@@ -425,12 +538,6 @@ def ProfileBadgeList(uid):
         return redirect(url_for("HomePage"))
 
 
-@app.route("/addfriend/<uid>")
-def AddFriend(uid):
-    N.friend.SendRequest(session["Uid"], uid)
-    return redirect(url_for("ProfileURL", uid=uid))
-
-
 @app.route("/profile/<uid>/badges/<urlbadgeid>")
 def ProfileBadge(uid, urlbadgeid):
     if uid == str(session["Uid"]):
@@ -474,6 +581,12 @@ def ProfileBadge(uid, urlbadgeid):
         return redirect(url_for("HomePage"))
 
 
+@app.route("/addfriend/<uid>")
+def AddFriend(uid):
+    N.friend.SendRequest(session["Uid"], uid)
+    return redirect(url_for("ProfileURL", uid=uid))
+
+
 @app.route("/delete/notification/<nid>")
 def DeleteNotifier(nid):
     if N.delete.VerifyNotification(session["Uid"], nid):
@@ -503,15 +616,64 @@ def DeleteFriendRQT(fid):
 
 @app.route("/shop")
 def Shop():
-    return render_template(
-        "shop.html",
-        content=Text.ShopItems,
-        UserProfileSrc="Test",
-        UserName="Test",
-        UserProfile="Test",
-        isloggedin=True,
-        isadmin=False,
-    )
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "shop.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.shopTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Shop",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "shop.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.shopTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Shop",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
 
 
 @app.route("/confirmsignin", methods=["POST"])
@@ -542,7 +704,8 @@ def SignIn():
         UserProfileSrc="Test",
         UserName="Test",
         UserProfile="Test",
-        SiteData=Text.homeTextPageNologin,
+        SiteData=Text.signinTextPage,
+        StaticData=Text.staticPageData,
         isloggedin=False,
         isadmin=False,
         Theme=Theme,
@@ -591,7 +754,7 @@ def ConfirmSignup():
 
 @app.route("/test")
 def Test():
-    N.friend.SendRequest(session["Uid"], "fcc332f9-884e-11ed-aa30-001a7dda7111")
+    N.friend.SendRequest(session["Uid"], session["Uid"])
     return redirect(url_for("HomePage"))
 
 
@@ -603,7 +766,8 @@ def SignUp():
         UserProfileSrc="Test",
         UserName="Test",
         UserProfile="Test",
-        SiteData=Text.homeTextPageNologin,
+        SiteData=Text.signupTextPage,
+        StaticData=Text.staticPageData,
         isloggedin=False,
         isadmin=False,
         Theme=Theme,
@@ -625,7 +789,8 @@ def invalid_route(e):
         UserProfileSrc="Test",
         UserName="Test",
         UserProfile="Test",
-        SiteData=Text.homeTextPageNologin,
+        SiteData=Text.errorTextPage,
+        StaticData=Text.staticPageData,
         isloggedin=False,
         isadmin=False,
         Theme=Theme,

@@ -4,12 +4,12 @@
             <div class="col-6 col-md-2 mb-3">
                 <h5>Site</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Games</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Shop</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Leaderboard</a></li>
+                    <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
+                    <li class="nav-item mb-2"><a href="/games" class="nav-link p-0 text-muted">Games</a></li>
+                    <li class="nav-item mb-2"><a href="/shop" class="nav-link p-0 text-muted">Shop</a></li>
+                    <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">About</a></li>
                     {% if isloggedin %}
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Profile</a></li>
+                    <li class="nav-item mb-2"><a href="/profile/{{ Uid }}" class="nav-link p-0 text-muted">Profile</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -17,25 +17,26 @@
             <div class="col-6 col-md-2 mb-3">
                 <h5>Help</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">How To Play</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Help Center</a></li>
+                    <li class="nav-item mb-2"><a href="/help#htp" class="nav-link p-0 text-muted">How To Play</a></li>
+                    <li class="nav-item mb-2"><a href="/help" class="nav-link p-0 text-muted">Help Center</a></li>
                 </ul>
             </div>
 
             <div class="col-6 col-md-2 mb-3">
                 <h5>Me</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Profile</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Donations</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Ask The Creator</a></li>
+                    <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">About</a></li>
+                    <li class="nav-item mb-2"><a href="/profile/{{ CreatorUid }}" class="nav-link p-0 text-muted">Profile</a></li>
+                    <li class="nav-item mb-2"><a href="/donate" class="nav-link p-0 text-muted">Donate</a></li>
+                    <li class="nav-item mb-2"><a href="/ask" class="nav-link p-0 text-muted">Ask The Creator</a></li>
+                    <li class="nav-item mb-2"><a href="/idea" class="nav-link p-0 text-muted">Pitch an Idea</a></li>
                 </ul>
             </div>
 
             <div class="col-md-5 offset-md-1 mb-3">
                 <form>
                     <h5>Subscribe to our Rewards Program</h5>
-                    <p>Get Challenges in your inbox to earn ingame currency</p>
+                    <p>Get Challenges in your inbox to earn ingame Credits</p>
                     <div class="d-flex flex-column flex-sm-row w-100 gap-2">
                         <label for="newsletter1" class="visually-hidden">Email address</label>
                         <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
@@ -46,9 +47,9 @@
         </div>
 
         <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p>© 2022 {{SiteData['CompanyName']}}. All rights not reserved.</p>
+            <p>© 2023 {{StaticData['CompanyName']}}. All rights not reserved.</p>
             <ul class="list-unstyled d-flex">
-                <li class="ms-3"><a class="link-light" href="{{SiteData['CompanyTwitter']}}"><svg class="bi" width="24"
+                <li class="ms-3"><a class="link-light" href="{{StaticData['CompanyTwitter']}}"><svg class="bi" width="24"
                             height="24">
                             <use xlink:href="#twitter">
                                 <symbol id="twitter" viewBox="0 0 16 16">
@@ -58,7 +59,7 @@
                                 </symbol>
                             </use>
                         </svg></a></li>
-                <li class="ms-3"><a class="link-light" href="{{SiteData['CompanyInstagram']}}"><svg class="bi"
+                <li class="ms-3"><a class="link-light" href="{{StaticData['CompanyInstagram']}}"><svg class="bi"
                             width="24" height="24">
                             <use xlink:href="#instagram">
                                 <symbol id="instagram" viewBox="0 0 16 16">
@@ -68,7 +69,7 @@
                                 </symbol>
                             </use>
                         </svg></a></li>
-                <li class="ms-3"><a class="link-light" href="{{SiteData['CompanyYoutube']}}"><svg class="bi" width="24"
+                <li class="ms-3"><a class="link-light" href="{{StaticData['CompanyYoutube']}}"><svg class="bi" width="24"
                             height="24">
                             <use xlink:href="#youtube">
                                 <symbol id="youtube" viewBox="0 0 16 16">
