@@ -37,9 +37,9 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
 def check_email(email):
     if re.fullmatch(EMAIL_REGEX, email):
-        print("Valid Email")
+        return True
     else:
-        print("Invalid Email")
+        return False
 
 
 def seconds_to_hhmmss(seconds):
