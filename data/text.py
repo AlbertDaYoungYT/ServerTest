@@ -11,7 +11,7 @@ staticPageData["CompanyYoutube"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=
 global homeTextPage
 homeTextPage = {}
 
-homeTextPage["SiteTitle"]            = "SiteTitle"
+homeTextPage["SiteTitle"]            = "Home - Web Realms"
 homeTextPage["SiteDiscription1"]     = "SiteDiscription1"
 homeTextPage["SiteDiscription2"]     = "SiteDiscription2"
 homeTextPage["SiteWelcome"]          = [
@@ -41,14 +41,24 @@ homeTextPage["ColumnLinkNames"]      = ["ColumnLinkNames", "ColumnLinkNames", "C
 
 global signupTextPage
 signupTextPage = {}
+
+signupTextPage["SiteTitle"]             = "Sign Up - Web Realms"
+signupTextPage["SiteDiscription1"]      = "SiteDiscription1"
+signupTextPage["SiteDiscription2"]      = "SiteDiscription2"
+
 global signinTextPage
 signinTextPage = {}
+
+signinTextPage["SiteTitle"]             = "Sign In - Web Realms"
+signinTextPage["SiteDiscription1"]      = "SiteDiscription1"
+signinTextPage["SiteDiscription2"]      = "SiteDiscription2"
+
 global errorTextPage
 errorTextPage = {}
 global shopTextPage
 shopTextPage = {}
 
-shopTextPage["SiteTitle"]             = "SiteTitle"
+shopTextPage["SiteTitle"]             = "Shop - Web Realms"
 shopTextPage["SiteDiscription1"]      = "SiteDiscription1"
 shopTextPage["SiteDiscription2"]      = "SiteDiscription2"
 shopTextPage["SiteButton1"]           = ["Go to Shop", "#shop"]

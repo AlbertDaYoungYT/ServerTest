@@ -9,3 +9,4 @@
 9   -     X           Fix Apply For Admin in profile
 10  -     X           Create the game server
 11  -     X           Add Lotto winnings
+12  -     X           Create creator codes, codes and creator benefits

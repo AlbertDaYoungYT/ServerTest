@@ -56,6 +56,9 @@ def FetchBadge(BID):
     
     return "NOTFOUND"
 
+
+
+
 def CalculateRarity(Type, normal=True):
     if normal:
         cursor = DB.MainDB.cursor()

@@ -160,7 +160,7 @@ def About():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.aboutTextPage,
+            SiteData=Text.homeTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -200,8 +200,9 @@ def About():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.aboutTextPage,
+            SiteData=Text.homeTextPage,
             StaticData=Text.staticPageData,
+            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
@@ -210,6 +211,170 @@ def About():
             Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
             noNotifiers=NoNotifiers,
         )
+
+
+@app.route("/shop")
+def Shop():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "shop.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Shop",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "shop.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Shop",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
+@app.route("/confirmsignin", methods=["POST"])
+def ConfirmLogin():
+    if Data.ValidateUser(
+        request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()
+    ):
+        Uid = Data.FetchUID(
+            request.form["user"],
+            hashlib.sha512(request.form["pwd"].encode()).hexdigest(),
+        )
+        if Uid != False:
+            session["Uid"] = Uid
+            return redirect(url_for("HomePage"))
+        else:
+            flash("Uid could not be found, please contact an admin")
+            return redirect(url_for("SignIn"))
+
+    flash("Incorrect Username or Password")
+    return redirect(url_for("SignIn"))
+
+
+@app.route("/signin")
+def SignIn():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "login.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Login",
+        )
+    else:
+        return redirect(url_for("HomePage"))
+
+
+@app.route("/confirmsignup", methods=["POST"])
+def ConfirmSignup():
+    if not Data.ValidateUser(
+        request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()
+    ):
+        try:
+            if (
+                (request.form["bday"].split("-"))[0] != "00"
+                and (request.form["bday"].split("-"))[1] != "00"
+                and (request.form["bday"].split("-"))[2] != "0000"
+                and not int((request.form["bday"].split("-"))[0]) > 33
+                and not int((request.form["bday"].split("-"))[1]) > 13
+                and not int((request.form["bday"].split("-"))[2])
+                < int(date.today().year) - 123
+            ):
+                Uid = uuid.uuid1()
+                session["Uid"] = Uid
+                session["theme"] = "default"
+                Data.CreateUser(
+                    Uid,
+                    request.form["dname"],
+                    request.form["user"],
+                    hashlib.sha512(request.form["pwd"].encode()).hexdigest(),
+                    request.form["bday"],
+                )
+
+                return redirect(url_for("HomePage"))
+            else:
+                flash("No way thats your bithday")
+                return redirect(url_for("SignUp"))
+        except Exception as e:
+            print(e)
+            flash("An Error Occurred")
+            return redirect(url_for("SignUp"))
+
+    flash("User already exists")
+    return redirect(url_for("SignUp"))
+
+
+@app.route("/signup")
+def SignUp():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "signup.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="SignUp",
+        )
+    else:
+        return redirect(url_for("HomePage"))
 
 
 
@@ -581,6 +746,27 @@ def ProfileBadge(uid, urlbadgeid):
         return redirect(url_for("HomePage"))
 
 
+@app.route("/subscribe", method=["POST"])
+def Subscribe():
+    if uid == session["Uid"]:
+        E.Add(
+            session["Uid"],
+            request.form["email"]
+        )
+    else:
+        return redirect(url_for("HomePage"))
+
+
+@app.route("/unsubscribe", method=["POST"])
+def Subscribe():
+    if uid == session["Uid"]:
+        E.Remove(
+            session["Uid"]
+        )
+    else:
+        return redirect(url_for("HomePage"))
+
+
 @app.route("/addfriend/<uid>")
 def AddFriend(uid):
     N.friend.SendRequest(session["Uid"], uid)
@@ -614,167 +800,6 @@ def DeleteFriendRQT(fid):
         return redirect(url_for("ProfileURL", uid=fid))
 
 
-@app.route("/shop")
-def Shop():
-    Uid = session.get("Uid")
-    if Uid == None:
-        Theme = T.FetchDefaultTheme()
-        return render_template(
-            "shop.html",
-            UserProfileSrc="Test",
-            UserName="Test",
-            UserProfile="Test",
-            SiteData=Text.shopTextPage,
-            StaticData=Text.staticPageData,
-            isloggedin=False,
-            isadmin=False,
-            Theme=Theme,
-            Page="Shop",
-        )
-    else:
-        data = list(UP.FetchUserdata(Uid))
-        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
-        try:
-            if "".join(data) == "NOTFOUND":
-                return redirect(url_for("LogOut"))
-        except Exception as e:
-            pass
-
-        try:
-            Theme = session["theme"]
-        except Exception as e:
-            Theme = "default"
-        Theme = T.FetchTheme(Theme)
-
-        if data[-1] == "False":
-            admin = False
-        else:
-            admin = True
-
-        Notifications = N.friend.FetchNotifiers(Uid)
-        NoNotifiers = False
-        if Notifications == []:
-            NoNotifiers = True
-
-        Notifications = calculate_notifier_times(Notifications)
-
-        return render_template(
-            "shop.html",
-            Uid=data[0],
-            UserProfileSrc=f"/static/favicons/{data[2]}",
-            UserName=data[1],
-            UserProfile=f"{data[0]}",
-            SiteData=Text.shopTextPage,
-            StaticData=Text.staticPageData,
-            isloggedin=True,
-            isadmin=False,
-            Theme=Theme,
-            Page="Shop",
-            Badges=badges,
-            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
-            noNotifiers=NoNotifiers,
-        )
-
-
-@app.route("/confirmsignin", methods=["POST"])
-def ConfirmLogin():
-    if Data.ValidateUser(
-        request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()
-    ):
-        Uid = Data.FetchUID(
-            request.form["user"],
-            hashlib.sha512(request.form["pwd"].encode()).hexdigest(),
-        )
-        if Uid != False:
-            session["Uid"] = Uid
-            return redirect(url_for("HomePage"))
-        else:
-            flash("Uid could not be found, please contact an admin")
-            return redirect(url_for("SignIn"))
-
-    flash("Incorrect Username or Password")
-    return redirect(url_for("SignIn"))
-
-
-@app.route("/signin")
-def SignIn():
-    Theme = T.FetchDefaultTheme()
-    return render_template(
-        "login.html",
-        UserProfileSrc="Test",
-        UserName="Test",
-        UserProfile="Test",
-        SiteData=Text.signinTextPage,
-        StaticData=Text.staticPageData,
-        isloggedin=False,
-        isadmin=False,
-        Theme=Theme,
-        Page="SignIn",
-    )
-
-
-@app.route("/confirmsignup", methods=["POST"])
-def ConfirmSignup():
-    if not Data.ValidateUser(
-        request.form["user"], hashlib.sha512(request.form["pwd"].encode()).hexdigest()
-    ):
-        try:
-            if (
-                (request.form["bday"].split("-"))[0] != "00"
-                and (request.form["bday"].split("-"))[1] != "00"
-                and (request.form["bday"].split("-"))[2] != "0000"
-                and not int((request.form["bday"].split("-"))[0]) > 33
-                and not int((request.form["bday"].split("-"))[1]) > 13
-                and not int((request.form["bday"].split("-"))[2])
-                < int(date.today().year) - 123
-            ):
-                Uid = uuid.uuid1()
-                session["Uid"] = Uid
-                session["theme"] = "default"
-                Data.CreateUser(
-                    Uid,
-                    request.form["dname"],
-                    request.form["user"],
-                    hashlib.sha512(request.form["pwd"].encode()).hexdigest(),
-                    request.form["bday"],
-                )
-
-                return redirect(url_for("HomePage"))
-            else:
-                flash("No way thats your bithday")
-                return redirect(url_for("SignUp"))
-        except Exception as e:
-            print(e)
-            flash("An Error Occurred")
-            return redirect(url_for("SignUp"))
-
-    flash("User already exists")
-    return redirect(url_for("SignUp"))
-
-
-@app.route("/test")
-def Test():
-    N.friend.SendRequest(session["Uid"], session["Uid"])
-    return redirect(url_for("HomePage"))
-
-
-@app.route("/signup")
-def SignUp():
-    Theme = T.FetchDefaultTheme()
-    return render_template(
-        "signup.html",
-        UserProfileSrc="Test",
-        UserName="Test",
-        UserProfile="Test",
-        SiteData=Text.signupTextPage,
-        StaticData=Text.staticPageData,
-        isloggedin=False,
-        isadmin=False,
-        Theme=Theme,
-        Page="SignUp",
-    )
-
-
 @app.route("/logout")
 def LogOut():
     session.clear()
@@ -796,6 +821,12 @@ def invalid_route(e):
         Theme=Theme,
         Page="404",
     )
+
+
+@app.route("/test")
+def Test():
+    N.friend.SendRequest(session["Uid"], session["Uid"])
+    return redirect(url_for("HomePage"))
 
 
 if __name__ == "__main__":
