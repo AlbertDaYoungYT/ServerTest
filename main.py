@@ -377,6 +377,69 @@ def SignUp():
         return redirect(url_for("HomePage"))
 
 
+@app.route("/help")
+def Help():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "help.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Help",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "help.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.homeTextPage,
+            StaticData=Text.staticPageData,
+            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Help",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
 
 
 @app.route("/admin")
