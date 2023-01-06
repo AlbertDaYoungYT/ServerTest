@@ -81,7 +81,7 @@ def DecodeID(ID, time_of_creation):
     key = hashlib.md5(str(time_of_creation).encode('utf-8')).hexdigest()
 
     cipher = AES.new(key.encode("utf-8"), AES.MODE_CBC, iv=b"0123456789abcdef")
-    ID = b64decode(cipher.decrypt(b85decode(ID.encode())).split(b"=")[0] + b"=").decode()
+    ID = b64decode(cipher.decrypt(b85decode(ID)).split(b"=")[0] + b"=")
     ID = [ID[i:i+2] for i in range(0, len(ID), 2)]
     one_locs = [i for i, x in enumerate(ID) if x == "01"]
     ID = [i for i in ID if i != "01"]
@@ -98,6 +98,6 @@ def DecodeID(ID, time_of_creation):
             pass
 
     [ ID.insert(loc, " ") for loc in one_locs]
-    ID = ''.join(ID).split()
+    ID = ''.join(ID).split(",")[0:-1]
 
     return ID

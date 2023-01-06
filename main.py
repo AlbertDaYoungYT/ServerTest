@@ -16,6 +16,7 @@ import data.text as Text
 import modules.DataBase as Data
 import modules.UserProfile as UP
 import modules.notifications as N
+import modules.Email as E
 import modules.friends as F
 import modules.BadgeDB as BD
 import modules.Theme as T
@@ -160,7 +161,7 @@ def About():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.aboutTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -200,7 +201,7 @@ def About():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.aboutTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -223,7 +224,7 @@ def Shop():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.shopTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -263,7 +264,7 @@ def Shop():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.shopTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -306,7 +307,7 @@ def SignIn():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.signinTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -366,7 +367,7 @@ def SignUp():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.signupTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -387,7 +388,7 @@ def Help():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.helpTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -427,13 +428,76 @@ def Help():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.homeTextPage,
+            SiteData=Text.helpTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
             Page="Help",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
+@app.route("/ask")
+def AskTheCreator():
+    Uid = session.get("Uid")
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "ask.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=Text.askTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Ask",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            pass
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "ask.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=Text.askTextPage,
+            StaticData=Text.staticPageData,
+            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Ask",
             Badges=badges,
             Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
             noNotifiers=NoNotifiers,
@@ -748,6 +812,8 @@ def ProfileBadgeList(uid):
         else:
             admin = True
 
+        badgeTime = [datetime.fromtimestamp(round(x[6])) for x in badges]
+
         return render_template(
             "profile/badge.html",
             Uid=data[0],
@@ -757,8 +823,8 @@ def ProfileBadgeList(uid):
             isloggedin=True,
             isadmin=admin,
             Badges=badges,
+            LenBadges=len(badges),
             BadgeTime=badgeTime,
-            len=len(badgeTime),
             BadgeRanks=S.RARITY_RANKS,
             Theme=Theme,
         )
@@ -809,9 +875,9 @@ def ProfileBadge(uid, urlbadgeid):
         return redirect(url_for("HomePage"))
 
 
-@app.route("/subscribe", method=["POST"])
+@app.route("/subscribe", methods=["POST"])
 def Subscribe():
-    if uid == session["Uid"]:
+    if Data.ValidateID(session["Uid"]):
         E.Add(
             session["Uid"],
             request.form["email"]
@@ -820,9 +886,9 @@ def Subscribe():
         return redirect(url_for("HomePage"))
 
 
-@app.route("/unsubscribe", method=["POST"])
-def Subscribe():
-    if uid == session["Uid"]:
+@app.route("/unsubscribe", methods=["POST"])
+def UnSubscribe():
+    if Data.ValidateID(session["Uid"]):
         E.Remove(
             session["Uid"]
         )
