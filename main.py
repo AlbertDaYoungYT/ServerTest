@@ -18,6 +18,7 @@ import modules.UserProfile as UP
 import modules.notifications as N
 import modules.Email as E
 import modules.friends as F
+import modules.event as EV
 import modules.BadgeDB as BD
 import modules.Theme as T
 import modules.time as time
@@ -955,7 +956,12 @@ def invalid_route(e):
 @app.route("/test")
 def Test():
     N.friend.SendRequest(session["Uid"], session["Uid"])
+    ID = uuid.uuid4()
+    EV.manager.CreateEvent(ID, "Test", "test", "True", "True", "==", """print("damn")""")
+    EV.trigger(ID)
     return redirect(url_for("HomePage"))
+
+
 
 
 if __name__ == "__main__":

@@ -11,10 +11,10 @@ staticPageData["CompanyYoutube"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=
 global homeTextPage
 homeTextPage = {}
 
-homeTextPage["SiteTitle"]            = "Home - Web Realms"
-homeTextPage["SiteDiscription1"]     = "SiteDiscription1"
-homeTextPage["SiteDiscription2"]     = "SiteDiscription2"
-homeTextPage["SiteWelcome"]          = [
+homeTextPage["SiteTitle"]               = "Home - Web Realms"
+homeTextPage["SiteText1"]               = "SiteText1"
+homeTextPage["SiteText2"]               = "SiteText2"
+homeTextPage["SiteWelcome"]             = [
     "Welcome back to your online home %s!",
     "Welcome back to our community %s!",
     "Glad to have you back with us %s!",
@@ -43,28 +43,34 @@ global signupTextPage
 signupTextPage = {}
 
 signupTextPage["SiteTitle"]             = "Sign Up - Web Realms"
-signupTextPage["SiteDiscription1"]      = "SiteDiscription1"
-signupTextPage["SiteDiscription2"]      = "SiteDiscription2"
+signupTextPage["SiteText1"]             = "SiteText1"
+signupTextPage["SiteText2"]             = "SiteText2"
 
 global signinTextPage
 signinTextPage = {}
 
 signinTextPage["SiteTitle"]             = "Sign In - Web Realms"
-signinTextPage["SiteDiscription1"]      = "SiteDiscription1"
-signinTextPage["SiteDiscription2"]      = "SiteDiscription2"
+signinTextPage["SiteText1"]             = "SiteText1"
+signinTextPage["SiteText2"]             = "SiteText2"
 
 global errorTextPage
 errorTextPage = {}
 global shopTextPage
 shopTextPage = {}
 
-shopTextPage["SiteTitle"]             = "Shop - Web Realms"
-shopTextPage["SiteDiscription1"]      = "SiteDiscription1"
-shopTextPage["SiteDiscription2"]      = "SiteDiscription2"
-shopTextPage["SiteButton1"]           = ["Go to Shop", "#shop"]
-shopTextPage["SiteButton2"]           = ["Go to Market", "#market"]
+shopTextPage["SiteTitle"]               = "Shop - Web Realms"
+shopTextPage["SiteText1"]               = "SiteText1"
+shopTextPage["SiteText2"]               = "SiteText2"
+shopTextPage["SiteButton1"]             = ["Go to Shop", "#shop"]
+shopTextPage["SiteButton2"]             = ["Go to Market", "#market"]
 
 global leaderboardTextPage
 leaderboardTextPage = {}
 global aboutTextPage
 aboutTextPage = {}
+global askTextPage
+askTextPage = {}
+
+askTextPage["SiteTitle"]               = "Ask The Creator - Web Realms"
+askTextPage["SiteText1"]               = "Welcome to Ask The Creator"
+askTextPage["SiteText2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"

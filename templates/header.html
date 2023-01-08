@@ -36,16 +36,30 @@
             {% if isloggedin %}
             <div class="dropdown-center text-end">
                 {% if noNotifiers %}
-                <a class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false" onclick="alert('INFO: No Notifications :(');" style="cursor: pointer;">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <img src="/static/favicons/notifier/bell.png" width="24" height="24">
                 </a>
+                <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px">
+                    <div class="notification-ui-header">
+                        <h4 class="text-center">Notifications</h4>
+                    </div>
+                    <div class="notification-ui-content" style="width: 450px;align-content: center;">
+                        <div class="notification-list">
+                            <div class="notification-list_detail" style="align-content: center;">
+                                <p>No Notifications</p>
+                            </div>
+                            <div class="notification-list_feature-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% else %}
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <img src="/static/favicons/notifier/notification.png" width="24" height="24">
                 </a>
-                <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px">
                     <div class="notification-ui-header">
                         <h4 class="text-center">Notifications</h4>
                     </div>

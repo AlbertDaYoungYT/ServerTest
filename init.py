@@ -42,3 +42,12 @@ mycursor.execute("CREATE TABLE `allc` (`CID` TEXT NOT NULL,`Name` TEXT NOT NULL,
 mycursor.execute("CREATE TABLE `users` (`ID` TEXT NOT NULL,`C1` TEXT NOT NULL,`C2` TEXT NOT NULL,`C3` TEXT NOT NULL,`C4` TEXT NOT NULL,`C5` TEXT NOT NULL)")
 
 DB.ChallengesDB.commit()
+
+
+mycursor = DB.EventDB.cursor()
+
+mycursor.execute("DROP TABLE IF EXISTS events")
+
+mycursor.execute("CREATE TABLE `events` (`ID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Type` TEXT NOT NULL,`A` TEXT NOT NULL,`B` TEXT NOT NULL,`Op` TEXT NOT NULL,`Data` TEXT NOT NULL)")
+
+DB.EventDB.commit()
