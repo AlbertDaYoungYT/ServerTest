@@ -959,8 +959,8 @@ def Test():
     ID = uuid.uuid4()
     EV.manager.CreateEvent(ID, "Test", "test", "True", "True", "==", """print("damn")""")
     EV.trigger(ID)
+    print(request.accept_languages, request.args)
     return redirect(url_for("HomePage"))
-
 
 
 
