@@ -9,7 +9,7 @@
     <div class="px-4 py-5 my-5 text-center">
       <h1 class="display-5 fw-bold">{{SiteWelcome}}</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">{{SiteData["SiteText2"]}}</p>
+        <p class="lead mb-4">{{SiteData['newuser']["Text2"]}}</p>
       </div>
     </div>
     
@@ -17,26 +17,26 @@
     <div class="px-4 py-5 my-5 text-center">
       <h1 class="display-5 fw-bold">Welcome to {{StaticData["SiteName"]}}</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">{{SiteData["SiteText1"]}}</p>
+        <p class="lead mb-4">{{SiteData['newuser']["Text1"]}}</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <a href="{{SiteData['SiteButton1'][1]}}"><button type="button" class="fillbtn btn btn-primary btn-lg px-4 gap-3">{{SiteData["SiteButton1"][0]}}</button></a>
-          <a href="{{SiteData['SiteButton2'][1]}}"><button type="button" class="normbtn btn btn-outline-secondary btn-lg px-4">{{SiteData["SiteButton2"][0]}}</button></a>
+          <a href="{{SiteData['newuser']['Button1'][1]}}"><button type="button" class="fillbtn btn btn-primary btn-lg px-4 gap-3">{{SiteData['newuser']["Button1"][0]}}</button></a>
+          <a href="{{SiteData['newuser']['Button2'][1]}}"><button type="button" class="normbtn btn btn-outline-secondary btn-lg px-4">{{SiteData['newuser']["Button2"][0]}}</button></a>
         </div>
       </div>
     </div>
 
     <div class="container px-4 py-5" id="featured-3">
-      <h2 class="pb-2 border-bottom">{{SiteData['ColumnName']}}</h2>
+      <h2 class="pb-2 border-bottom">{{SiteData['newuser']['ColumnName']}}</h2>
       <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        {% for ColumnID in range(SiteData['ColumnCount']) %}
+        {% for ColumnID in range(SiteData['newuser']['ColumnCount']) %}
         <div class="feature col">
           <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
             <img class="bi" src="{{SiteData['ColumnIcons'][ColumnID]}}" alt="" width="48" height="48px">
           </div>
-          <h3 class="fs-2">{{SiteData['ColumnTitles'][ColumnID]}}</h3>
-          <p>{{SiteData['ColumnDiscriptions'][ColumnID]}}</p>
-          <a href="{{SiteData['ColumnLinks'][ColumnID]}}" class="normbtn icon-link d-inline-flex align-items-center">
-            {{SiteData['ColumnLinkNames'][ColumnID]}}
+          <h3 class="fs-2">{{SiteData['newuser']['ColumnTitles'][ColumnID]}}</h3>
+          <p>{{SiteData['newuser']['ColumnDiscriptions'][ColumnID]}}</p>
+          <a href="{{SiteData['newuser']['ColumnLinks'][ColumnID]}}" class="normbtn icon-link d-inline-flex align-items-center">
+            {{SiteData['newuser']['ColumnLinkNames'][ColumnID]}}
             <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
           </a>
         </div>

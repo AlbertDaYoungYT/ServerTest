@@ -6,7 +6,7 @@
   <meta name="author" content="">
   <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-  <title>{{SiteData["SiteTitle"]}}</title>
+  <title>{{SiteData['default']["Title"]}}</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
@@ -121,8 +121,8 @@ color: {{Theme[5]}};
       </ul>
       {% endif %}
       {% endwith %}
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-      <a class="w-100 btn btn-lg btn-secondary" href="/">Home</a>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">{{SiteData['default']["Button1"]}}</button>
+      <a class="w-100 btn btn-lg btn-secondary" href="/">{{SiteData['default']["Button2"]}}</a>
     </form>
   </main>
 </body>

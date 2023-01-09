@@ -9,27 +9,27 @@
 
             <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 {% if Page == "Home" %}
-                <li class="nav-item"><a href="/" class="nav-link active navac">Home</a></li>
+                <li class="nav-item"><a href="/" class="nav-link active navac">{{SiteData['Page1']}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="/" class="nav-link navac">Home</a></li>
+                <li class="nav-item"><a href="/" class="nav-link navac">{{SiteData['Page1']}}</a></li>
                 {% endif %}
                 
                 {% if Page == "Games" %}
-                <li class="nav-item"><a href="/games" class="nav-link active navac">Games</a></li>
+                <li class="nav-item"><a href="/games" class="nav-link active navac">{{SiteData['Page2']}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="/games" class="nav-link navac">Games</a></li>
+                <li class="nav-item"><a href="/games" class="nav-link navac">{{SiteData['Page2']}}</a></li>
                 {% endif %}
                 
                 {% if Page == "Shop" %}
-                <li class="nav-item"><a href="/shop" class="nav-link active navac">Shop</a></li>
+                <li class="nav-item"><a href="/shop" class="nav-link active navac">{{SiteData['Page3']}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="/shop" class="nav-link navac">Shop</a></li>
+                <li class="nav-item"><a href="/shop" class="nav-link navac">{{SiteData['Page3']}}</a></li>
                 {% endif %}
                 
                 {% if Page == "About" %}
-                <li class="nav-item"><a href="/about" class="nav-link active navac">About</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link active navac">{{SiteData['Page4']}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="/about" class="nav-link navac">About</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link navac">{{SiteData['Page4']}}</a></li>
                 {% endif %}
             </ul>
 
