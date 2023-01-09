@@ -1,3 +1,31 @@
+global staticTextPage
+staticTextPage = {}
+staticTextPage["header"] = {}
+staticTextPage["footer"] = {}
+staticTextPage["home"] = {}
+staticTextPage["home"]["default"] = {}
+staticTextPage["home"]["newuser"] = {}
+staticTextPage["home"]["logedin"] = {}
+
+staticTextPage["signup"] = {}
+staticTextPage["signup"]["default"] = {}
+
+staticTextPage["signin"] = {}
+staticTextPage["signin"]["default"] = {}
+
+staticTextPage["shop"] = {}
+staticTextPage["shop"]["default"] = {}
+staticTextPage["shop"]["newuser"] = {}
+staticTextPage["shop"]["logedin"] = {}
+
+staticTextPage["ask"] = {}
+staticTextPage["ask"]["default"] = {}
+staticTextPage["ask"]["newuser"] = {}
+staticTextPage["ask"]["logedin"] = {}
+
+
+
+
 staticTextPage["header"]["Page1"] = "Hjem"
 staticTextPage["header"]["Page2"] = "Spil"
 staticTextPage["header"]["Page3"] = "Butik"
@@ -8,6 +36,7 @@ staticTextPage["home"]["newuser"]["Text1"] = "Text1"
 staticTextPage["home"]["newuser"]["Text2"] = "Text2"
 staticTextPage["home"]["newuser"]["Button1"] = ["Tilmeld", "/signup"]
 staticTextPage["home"]["newuser"]["Button2"] = ["Logind", "/signin"]
+staticTextPage["home"]['newuser']['Welcome']             = "Velkommen til"
 staticTextPage["home"]["logedin"]["Welcome"] = [
     "Vi håber, du vil føle dig hjemme her %s",
     "Det er en fornøjelse at have dig %s",

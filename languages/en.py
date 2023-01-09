@@ -1,3 +1,31 @@
+global staticTextPage
+staticTextPage = {}
+staticTextPage["header"] = {}
+staticTextPage["footer"] = {}
+staticTextPage["home"] = {}
+staticTextPage["home"]["default"] = {}
+staticTextPage["home"]["newuser"] = {}
+staticTextPage["home"]["logedin"] = {}
+
+staticTextPage["signup"] = {}
+staticTextPage["signup"]["default"] = {}
+
+staticTextPage["signin"] = {}
+staticTextPage["signin"]["default"] = {}
+
+staticTextPage["shop"] = {}
+staticTextPage["shop"]["default"] = {}
+staticTextPage["shop"]["newuser"] = {}
+staticTextPage["shop"]["logedin"] = {}
+
+staticTextPage["ask"] = {}
+staticTextPage["ask"]["default"] = {}
+staticTextPage["ask"]["newuser"] = {}
+staticTextPage["ask"]["logedin"] = {}
+
+
+
+
 staticTextPage["header"]["Page1"] = "Home"
 staticTextPage["header"]["Page2"] = "Games"
 staticTextPage["header"]["Page3"] = "Shop"
@@ -13,6 +41,7 @@ staticTextPage["home"]["newuser"]["Text1"]               = "SiteText1"
 staticTextPage["home"]["newuser"]["Text2"]               = "SiteText2"
 staticTextPage["home"]["newuser"]["Button1"]          = ["Signup", "/signup"]
 staticTextPage["home"]["newuser"]["Button2"]          = ["Login", "/signin"]
+staticTextPage["home"]['newuser']['Welcome']             = "Welcome to"
 staticTextPage["home"]["logedin"]["Welcome"]             = [
     "Welcome back to your online home %s!",
     "Welcome back to our community %s!",

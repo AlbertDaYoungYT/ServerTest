@@ -92,7 +92,7 @@ def calculate_notifier_times(Notifiers):
 @app.route("/")
 def HomePage():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("Home", language="en")
+    staticTextPage = Text.LoadLanguagePage("Home", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(

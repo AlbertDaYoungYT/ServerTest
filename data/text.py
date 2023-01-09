@@ -20,10 +20,15 @@ import languages.da
 
 def LoadLanguagePage(page, language="en"):
     if   language == "en":
-        text = languages.en.staticTextPage[page.lower()] + languages.en.staticTextPage["header"] + languages.en.staticTextPage["footer"]
+        text = languages.en.staticTextPage[page.lower()].copy()
+        text.update(languages.en.staticTextPage["header"])
+        text.update(languages.en.staticTextPage["footer"])
     elif language == "da":
-        text = languages.da.staticTextPage[page.lower()] + languages.da.staticTextPage["header"] + languages.da.staticTextPage["footer"]
+        text = languages.da.staticTextPage[page.lower()].copy()
+        text.update(languages.da.staticTextPage["header"])
+        text.update(languages.da.staticTextPage["footer"])
     else:
         text = None
 
+    print(text)
     return text

@@ -15,7 +15,7 @@
     
     {% else %}
     <div class="px-4 py-5 my-5 text-center">
-      <h1 class="display-5 fw-bold">Welcome to {{StaticData["SiteName"]}}</h1>
+      <h1 class="display-5 fw-bold">{{SiteData['newuser']['Welcome']}} {{StaticData["SiteName"]}}</h1>
       <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">{{SiteData['newuser']["Text1"]}}</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -31,7 +31,7 @@
         {% for ColumnID in range(SiteData['newuser']['ColumnCount']) %}
         <div class="feature col">
           <div class="fillbtn feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
-            <img class="bi" src="{{SiteData['ColumnIcons'][ColumnID]}}" alt="" width="48" height="48px">
+            <img class="bi" src="{{SiteData['newuser']['ColumnIcons'][ColumnID]}}" alt="" width="48" height="48px">
           </div>
           <h3 class="fs-2">{{SiteData['newuser']['ColumnTitles'][ColumnID]}}</h3>
           <p>{{SiteData['newuser']['ColumnDiscriptions'][ColumnID]}}</p>
