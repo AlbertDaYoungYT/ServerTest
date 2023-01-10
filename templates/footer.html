@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6 col-md-2 mb-3">
-                <h5>Site</h5>
+                <h5>{{SiteData['Tabel1'][0]}}</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
                     <li class="nav-item mb-2"><a href="/games" class="nav-link p-0 text-muted">Games</a></li>
@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-6 col-md-2 mb-3">
-                <h5>Help</h5>
+                <h5>{{SiteData['Tabel2'][0]}}</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="/help#htp" class="nav-link p-0 text-muted">How To Play</a></li>
                     <li class="nav-item mb-2"><a href="/help" class="nav-link p-0 text-muted">Help Center</a></li>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-6 col-md-2 mb-3">
-                <h5>Me</h5>
+                <h5>{{SiteData['Tabel3'][0]}}</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">About</a></li>
                     <li class="nav-item mb-2"><a href="/profile/{{ CreatorUid }}" class="nav-link p-0 text-muted">Profile</a></li>
@@ -35,12 +35,12 @@
 
             <div class="col-md-5 offset-md-1 mb-3">
                 <form action="/subscribe" method="POST">
-                    <h5>Subscribe to our Rewards Program</h5>
-                    <p>Get Challenges in your inbox to earn ingame Credits</p>
+                    <h5>{{SiteData['Subscribe'][0]}}</h5>
+                    <p>{{SiteData['Subscribe'][1]}}</p>
                     <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                        <label for="newsletter1" class="visually-hidden">Email address</label>
-                        <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                        <button class="btn btn-primary" type="button">Subscribe</button>
+                        <label for="newsletter1" class="visually-hidden">{{SiteData['Subscribe'][2]}}</label>
+                        <input id="newsletter1" type="text" class="form-control" placeholder="{{SiteData['Subscribe'][2]}}">
+                        <button class="btn btn-primary" type="button">{{SiteData['Subscribe'][3]}}</button>
                     </div>
                 </form>
             </div>

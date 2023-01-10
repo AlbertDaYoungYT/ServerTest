@@ -8,29 +8,13 @@
             </a>
 
             <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                {% if Page == "Home" %}
-                <li class="nav-item"><a href="/" class="nav-link active navac">{{SiteData['Page1']}}</a></li>
+                {% for PageNav in range(StaticData["HeaderNavCount"]) %}
+                {% if Page == {{SiteData['PageNames'][PageNav]}} %}
+                <li class="nav-item"><a href="{{SiteData['HeaderNavLinks'][PageNav]}}" class="nav-link active navac">{{SiteData['PageNames'][PageNav]}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="/" class="nav-link navac">{{SiteData['Page1']}}</a></li>
+                <li class="nav-item"><a href="{{SiteData['HeaderNavLinks'][PageNav]}}" class="nav-link navac">{{SiteData['PageNames'][PageNav]}}</a></li>
                 {% endif %}
-                
-                {% if Page == "Games" %}
-                <li class="nav-item"><a href="/games" class="nav-link active navac">{{SiteData['Page2']}}</a></li>
-                {% else %}
-                <li class="nav-item"><a href="/games" class="nav-link navac">{{SiteData['Page2']}}</a></li>
-                {% endif %}
-                
-                {% if Page == "Shop" %}
-                <li class="nav-item"><a href="/shop" class="nav-link active navac">{{SiteData['Page3']}}</a></li>
-                {% else %}
-                <li class="nav-item"><a href="/shop" class="nav-link navac">{{SiteData['Page3']}}</a></li>
-                {% endif %}
-                
-                {% if Page == "About" %}
-                <li class="nav-item"><a href="/about" class="nav-link active navac">{{SiteData['Page4']}}</a></li>
-                {% else %}
-                <li class="nav-item"><a href="/about" class="nav-link navac">{{SiteData['Page4']}}</a></li>
-                {% endif %}
+                {% endfor %}
             </ul>
 
             {% if isloggedin %}
@@ -42,12 +26,12 @@
                 </a>
                 <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px">
                     <div class="notification-ui-header">
-                        <h4 class="text-center">Notifications</h4>
+                        <h4 class="text-center">{{SiteData['Notifi1']}}</h4>
                     </div>
                     <div class="notification-ui-content" style="width: 450px;align-content: center;">
                         <div class="notification-list">
                             <div class="notification-list_detail" style="align-content: center;">
-                                <p>No Notifications</p>
+                                <p>{{SiteData['NoNotifi1']}}</p>
                             </div>
                             <div class="notification-list_feature-img">
                             </div>
@@ -61,7 +45,7 @@
                 </a>
                 <div class="dropdown-menu notification-ui" aria-labelledby="navbarDropdown" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px">
                     <div class="notification-ui-header">
-                        <h4 class="text-center">Notifications</h4>
+                        <h4 class="text-center">{{SiteData['Notifi1']}}</h4>
                     </div>
                     {% for Notifier in Notifications %}
                     <div class="notification-ui-content" style="width: 450px;align-content: left;">
@@ -79,9 +63,9 @@
                                 {% if Notifier[4] == "FriendRQT" %}
                                 <div class="notifier-button">
                                     <p><small onclick="window.location.href='/accept/friendrqt/{{ Notifier[2] }}';"
-                                            style="cursor: pointer;">Accept</small></p>
+                                            style="cursor: pointer;">{{SiteData['NotifiButton1']}}</small></p>
                                     <p><small onclick="window.location.href='/delete/notification/{{ Notifier[0] }}';"
-                                            style="cursor: pointer;">Deny</small></p>
+                                            style="cursor: pointer;">{{SiteData['NotifiButton2']}}</small></p>
                                 </div>
                                 {% endif %}
                             </div>

@@ -62,10 +62,15 @@ staticTextPage["signup"]["default"]["Text1"]             = "SiteText1"
 staticTextPage["signup"]["default"]["Text2"]             = "SiteText2"
 
 staticTextPage["signin"]["default"]["Title"]             = "Logind - Web Realms"
-staticTextPage["signin"]["default"]["Text1"]             = "SiteText1"
-staticTextPage["signin"]["default"]["Text2"]             = "SiteText2"
+staticTextPage["signin"]["default"]["Text1"]             = "Log venligst på"
+staticTextPage["signin"]["default"]["Form1"]             = "Brugernavn"
+staticTextPage["signin"]["default"]["Form2"]             = "Adgangskode"
+staticTextPage["signin"]["default"]["Button1"]           = "Logind"
+staticTextPage["signin"]["default"]["Button2"]           = "Hjem"
 
 staticTextPage["shop"]["newuser"]["Title"]               = "Butik - Web Realms"
+staticTextPage["shop"]["newuser"]["Name1"]               = "Velkommen til Butikken"
+staticTextPage["shop"]["newuser"]["Name2"]               = "Velkommen til Marked"
 staticTextPage["shop"]["newuser"]["Text1"]               = "SiteText1"
 staticTextPage["shop"]["newuser"]["Text2"]               = "SiteText2"
 staticTextPage["shop"]["newuser"]["Button1"]             = ["Gå til Butikken", "#shop"]

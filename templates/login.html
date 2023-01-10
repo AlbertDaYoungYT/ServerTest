@@ -103,14 +103,14 @@ color: {{Theme[5]}};
     
     <form action="/confirmsignin" method="POST">
       <img class="mb-4" src="static/favicons/lock.png" alt="" width="72" height="90">
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 fw-normal">{{SiteData['default']["Text1"]}}</h1>
       <div class="form-floating">
         <input type="username" class="form-control" id="floatingInput" placeholder="Username" name="user">
-        <label for="floatingInput">Username</label>
+        <label for="floatingInput">{{SiteData['default']["Form1"]}}</label>
       </div>
       <div class="form-floating">
         <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
-        <label for="floatingPassword">Password</label>
+        <label for="floatingPassword">{{SiteData['default']["Form2"]}}</label>
       </div>
       {% with messages = get_flashed_messages() %}
       {% if messages %}

@@ -26,21 +26,54 @@ staticTextPage["ask"]["logedin"] = {}
 
 
 
-staticTextPage["header"]["Page1"] = "Home"
-staticTextPage["header"]["Page2"] = "Games"
-staticTextPage["header"]["Page3"] = "Shop"
-staticTextPage["header"]["Page4"] = "About"
+staticTextPage["header"]["PageNames"] = ["Home", "Games", "Shop", "About"]
 
-staticTextPage["footer"]["default"] = "Home"
-staticTextPage["footer"]["default"] = "Shop"
-staticTextPage["footer"]["default"] = "Leaderboard"
-staticTextPage["footer"]["default"] = "About"
+staticTextPage["header"]["Notifi1"] = "Notifications"
+staticTextPage["header"]["NoNotifi1"] = "No Notifications"
+
+staticTextPage["header"]["NotifiButton1"] = "Accept"
+staticTextPage["header"]["NotifiButton2"] = "Deny"
+
+
+staticTextPage["footer"]["Tabel1"] = [
+    "Site",
+    [
+        "Home",
+        "Games",
+        "Shop",
+        "About"
+    ],
+    "Profile"
+]
+staticTextPage["footer"]["Tabel2"] = [
+    "Help",
+    [
+        "How to Play",
+        "Help Center"
+    ]
+]
+staticTextPage["footer"]["Tabel3"] = [
+    "Me",
+    [
+        "About",
+        "Profile",
+        "Donate",
+        "Ask The Creator",
+        "Pitch an Idea"
+    ]
+]
+staticTextPage["footer"]["Subscribe"] = [
+    "Subscribe to our Rewards Program",
+    "Get Challenges in your inbox to earn ingame Credits",
+    "Email address",
+    "Subscribe"
+]
 
 staticTextPage["home"]["default"]["Title"]               = "Home - Web Realms"
 staticTextPage["home"]["newuser"]["Text1"]               = "SiteText1"
 staticTextPage["home"]["newuser"]["Text2"]               = "SiteText2"
-staticTextPage["home"]["newuser"]["Button1"]          = ["Signup", "/signup"]
-staticTextPage["home"]["newuser"]["Button2"]          = ["Login", "/signin"]
+staticTextPage["home"]["newuser"]["Button1"]             = ["Signup", "/signup"]
+staticTextPage["home"]["newuser"]["Button2"]             = ["Login", "/signin"]
 staticTextPage["home"]['newuser']['Welcome']             = "Welcome to"
 staticTextPage["home"]["logedin"]["Welcome"]             = [
     "Welcome back to your online home %s!",
@@ -69,10 +102,15 @@ staticTextPage["signup"]["default"]["Text1"]             = "SiteText1"
 staticTextPage["signup"]["default"]["Text2"]             = "SiteText2"
 
 staticTextPage["signin"]["default"]["Title"]             = "Sign In - Web Realms"
-staticTextPage["signin"]["default"]["Text1"]             = "SiteText1"
-staticTextPage["signin"]["default"]["Text2"]             = "SiteText2"
+staticTextPage["signin"]["default"]["Text1"]             = "Please signin"
+staticTextPage["signin"]["default"]["Form1"]             = "Username"
+staticTextPage["signin"]["default"]["Form2"]             = "Password"
+staticTextPage["signin"]["default"]["Button1"]           = "Signin"
+staticTextPage["signin"]["default"]["Button2"]           = "Home"
 
 staticTextPage["shop"]["newuser"]["Title"]               = "Shop - Web Realms"
+staticTextPage["shop"]["newuser"]["Name1"]               = "Welcome to the Shop"
+staticTextPage["shop"]["newuser"]["Name2"]               = "Welcome to the Market"
 staticTextPage["shop"]["newuser"]["Text1"]               = "SiteText1"
 staticTextPage["shop"]["newuser"]["Text2"]               = "SiteText2"
 staticTextPage["shop"]["newuser"]["Button1"]             = ["Go to Shop", "#shop"]
@@ -81,3 +119,10 @@ staticTextPage["shop"]["newuser"]["Button2"]             = ["Go to Market", "#ma
 staticTextPage["ask"]["default"]["Title"]               = "Ask The Creator - Web Realms"
 staticTextPage["ask"]["default"]["Text1"]               = "Welcome to Ask The Creator"
 staticTextPage["ask"]["default"]["Text2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"
+
+staticTextPage["404"]["Title"] = "Error 404"
+staticTextPage["404"]["ErrorCode"] = "404"
+staticTextPage["404"]["BoldText"] = "Opps!"
+staticTextPage["404"]["Text1"] = "Page not found."
+staticTextPage["404"]["Text2"] = "The page you’re looking for doesn’t exist."
+staticTextPage["404"]["Button1"] = "Go Home"

@@ -7,6 +7,19 @@ staticPageData["CompanyTwitter"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=
 staticPageData["CompanyInstagram"]     = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
 staticPageData["CompanyYoutube"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
 
+staticPageData["FooterTabelLink1"] = []
+staticPageData["FooterTabelLink2"] = []
+staticPageData["FooterTabelLink3"] = []
+
+staticPageData["HeaderNavLinks"] = ["/", "/games", "/shop", "/about"]
+staticPageData["HeaderNavCount"] = len(staticPageData["HeaderNavLinks"])
+staticPageData["HeaderProLinks"] = [
+    {
+        "Name": "Friends",
+        "Link": ["/profile/", "/friendlist"]
+    }
+]
+
 
 
 
