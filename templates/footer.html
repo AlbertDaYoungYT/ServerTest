@@ -4,12 +4,11 @@
             <div class="col-6 col-md-2 mb-3">
                 <h5>{{SiteData['Tabel1'][0]}}</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
-                    <li class="nav-item mb-2"><a href="/games" class="nav-link p-0 text-muted">Games</a></li>
-                    <li class="nav-item mb-2"><a href="/shop" class="nav-link p-0 text-muted">Shop</a></li>
-                    <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">About</a></li>
+                    {% for TabelID in range(StaticData['FooterTabelCounts'][0]) %}
+                    <li class="nav-item mb-2"><a href="{{StaticData['FooterTabelLinks1'][TabelID]}}" class="nav-link p-0 text-muted">{{SiteData['Tabel1'][1][TabelID]}}</a></li>
+                    {% endfor %}
                     {% if isloggedin %}
-                    <li class="nav-item mb-2"><a href="/profile/{{ Uid }}" class="nav-link p-0 text-muted">Profile</a></li>
+                    <li class="nav-item mb-2"><a href="{{StaticData['FooterTabelLinksOther'][0]}}{{ Uid }}" class="nav-link p-0 text-muted">{{SiteData['Tabel1'][2]}}</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -17,19 +16,18 @@
             <div class="col-6 col-md-2 mb-3">
                 <h5>{{SiteData['Tabel2'][0]}}</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="/help#htp" class="nav-link p-0 text-muted">How To Play</a></li>
-                    <li class="nav-item mb-2"><a href="/help" class="nav-link p-0 text-muted">Help Center</a></li>
+                    {% for TabelID in range(StaticData['FooterTabelCounts'][1]) %}
+                    <li class="nav-item mb-2"><a href="{{StaticData['FooterTabelLinks2'][TabelID]}}" class="nav-link p-0 text-muted">{{SiteData['Tabel2'][1][TabelID]}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
 
             <div class="col-6 col-md-2 mb-3">
                 <h5>{{SiteData['Tabel3'][0]}}</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">About</a></li>
-                    <li class="nav-item mb-2"><a href="/profile/{{ CreatorUid }}" class="nav-link p-0 text-muted">Profile</a></li>
-                    <li class="nav-item mb-2"><a href="/donate" class="nav-link p-0 text-muted">Donate</a></li>
-                    <li class="nav-item mb-2"><a href="/ask" class="nav-link p-0 text-muted">Ask The Creator</a></li>
-                    <li class="nav-item mb-2"><a href="/idea" class="nav-link p-0 text-muted">Pitch an Idea</a></li>
+                    {% for TabelID in range(StaticData['FooterTabelCounts'][2]) %}
+                    <li class="nav-item mb-2"><a href="{{StaticData['FooterTabelLinks3'][TabelID]}}" class="nav-link p-0 text-muted">{{SiteData['Tabel3'][1][TabelID]}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
 

@@ -26,10 +26,59 @@ staticTextPage["ask"]["logedin"] = {}
 
 
 
-staticTextPage["header"]["Page1"] = "Hjem"
-staticTextPage["header"]["Page2"] = "Spil"
-staticTextPage["header"]["Page3"] = "Butik"
-staticTextPage["header"]["Page4"] = "Om"
+staticTextPage["header"]["PageNames"] = ["Hjem", "Spil", "Butik", "Om"]
+
+staticTextPage["header"]["ProMenuDropDown"] = [
+    "Venner",
+    "Handel",
+    "Udfordringer",
+    "Butikstransaktioner",
+    "Inventar",
+    "Admin Panel",
+    "Profil",
+    "Log ud"
+]
+
+staticTextPage["header"]["Notifi1"] = "Meddelelser"
+staticTextPage["header"]["NoNotifi1"] = "Ingen Meddelelser"
+
+staticTextPage["header"]["NotifiButton1"] = "Acceptere"
+staticTextPage["header"]["NotifiButton2"] = "Afvis"
+
+
+staticTextPage["footer"]["Tabel1"] = [
+    "Websted",
+    [
+        "Hjem",
+        "Spil",
+        "Butik",
+        "Om"
+    ],
+    "Profil"
+]
+staticTextPage["footer"]["Tabel2"] = [
+    "Hjælp",
+    [
+        "Hvordan Spiller man",
+        "Hjælpe Center"
+    ]
+]
+staticTextPage["footer"]["Tabel3"] = [
+    "Mig",
+    [
+        "Om",
+        "Profil",
+        "Doner",
+        "Spørg Skaberen",
+        "Pitch en Idé"
+    ]
+]
+staticTextPage["footer"]["Subscribe"] = [
+    "Abonner på vores Belønningsprogram",
+    "Få udfordringer i din indbakke for at optjene ingame-kreditter",
+    "Email adresse",
+    "Abonner"
+]
 
 staticTextPage["home"]["default"]["Title"] = "Hjem - Web Realms"
 staticTextPage["home"]["newuser"]["Text1"] = "Text1"

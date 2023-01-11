@@ -94,17 +94,17 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/friendlist">Friends</a></li>
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/trades">Trades</a></li>
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/challenges">Challenges</a></li>
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/transactions">Shop Transactions</a>
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}/inventory">Inventory</a>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][0][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][0][1]}}">{{ SiteData['ProMenuDropDown'][0] }}</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][1][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][1][1]}}">{{ SiteData['ProMenuDropDown'][1] }}</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][2][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][2][1]}}">{{ SiteData['ProMenuDropDown'][2] }}</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][3][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][3][1]}}">{{ SiteData['ProMenuDropDown'][3] }}</a>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][4][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][4][1]}}">{{ SiteData['ProMenuDropDown'][4] }}</a>
                     </li>
                     {% if isadmin %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="/admin/homepage">Admin Panel</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][5][0]}}{{StaticData['HeaderProLinks'][5][1]}}">{{ SiteData['ProMenuDropDown'][5] }}</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -113,8 +113,8 @@
                         <hr class="dropdown-divider">
                     </li>
                     {% endif %}
-                    <li><a class="dropdown-item" href="/profile/{{ UserProfile }}">Profile</a></li>
-                    <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][6][0]}}{{ UserProfile }}{{StaticData['HeaderProLinks'][6][1]}}">{{ SiteData['ProMenuDropDown'][6] }}</a></li>
+                    <li><a class="dropdown-item" href="{{StaticData['HeaderProLinks'][7]}}">{{ SiteData['ProMenuDropDown'][7] }}</a></li>
                 </ul>
             </div>
             {% else %}

@@ -7,17 +7,43 @@ staticPageData["CompanyTwitter"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=
 staticPageData["CompanyInstagram"]     = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
 staticPageData["CompanyYoutube"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
 
-staticPageData["FooterTabelLink1"] = []
-staticPageData["FooterTabelLink2"] = []
-staticPageData["FooterTabelLink3"] = []
+staticPageData["FooterTabelLinks1"] = [
+    "/",
+    "/games",
+    "/shop",
+    "/about"
+]
+staticPageData["FooterTabelLinks2"] = [
+    "/help#htp",
+    "/help"
+]
+staticPageData["FooterTabelLinks3"] = [
+    "/about/",
+    "/profile/\{\{ Uid \}\}",
+    "/donate",
+    "/ask",
+    "/idea"
+]
+staticPageData["FooterTabelLinksOther"] = [
+    "/profile/"
+]
+staticPageData["FooterTabelCounts"] = [
+    len(staticPageData["FooterTabelLinks1"]),
+    len(staticPageData["FooterTabelLinks2"]),
+    len(staticPageData["FooterTabelLinks3"])
+]
 
 staticPageData["HeaderNavLinks"] = ["/", "/games", "/shop", "/about"]
 staticPageData["HeaderNavCount"] = len(staticPageData["HeaderNavLinks"])
 staticPageData["HeaderProLinks"] = [
-    {
-        "Name": "Friends",
-        "Link": ["/profile/", "/friendlist"]
-    }
+    ["/profile/", "/friendlist"],
+    ["/profile/", "/trades"],
+    ["/profile/", "/challenges"],
+    ["/profile/", "/transactions"],
+    ["/profile/", "/inventory"],
+    ["/admin", "/homepage"],
+    ["/profile/", "/"],
+    "/logout"
 ]
 
 

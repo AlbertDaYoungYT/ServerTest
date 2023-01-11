@@ -28,6 +28,17 @@ staticTextPage["ask"]["logedin"] = {}
 
 staticTextPage["header"]["PageNames"] = ["Home", "Games", "Shop", "About"]
 
+staticTextPage["header"]["ProMenuDropDown"] = [
+    "Friends",
+    "Trades",
+    "Challenges",
+    "Shop Transactions",
+    "Inventory",
+    "Admin Panel",
+    "Profile",
+    "Sign Out"
+]
+
 staticTextPage["header"]["Notifi1"] = "Notifications"
 staticTextPage["header"]["NoNotifi1"] = "No Notifications"
 
