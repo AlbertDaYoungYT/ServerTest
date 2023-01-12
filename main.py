@@ -142,7 +142,7 @@ def HomePage():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(Text.staticTextPage["logedin"]["Welcome"]) % (data[1],),
+            SiteWelcome=random.choice(staticTextPage["logedin"]["Welcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
@@ -206,7 +206,7 @@ def About():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            SiteWelcome=random.choice(staticTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
@@ -270,7 +270,7 @@ def Shop():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
+            SiteWelcome=random.choice(staticTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
@@ -947,7 +947,7 @@ def LogOut():
 @app.errorhandler(404)
 def invalid_route(e):
     Theme = T.FetchDefaultTheme()
-    staticTextPage = Text.LoadLanguagePage("404", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage("error404", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     return render_template(
         "404.html",
         UserProfileSrc="Test",

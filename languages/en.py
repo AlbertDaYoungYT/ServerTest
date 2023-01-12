@@ -23,7 +23,10 @@ staticTextPage["ask"]["default"] = {}
 staticTextPage["ask"]["newuser"] = {}
 staticTextPage["ask"]["logedin"] = {}
 
-staticTextPage["404"] = {}
+staticTextPage["about"] = {}
+staticTextPage["about"]["default"] = {}
+
+staticTextPage["error404"] = {}
 
 
 
@@ -133,9 +136,13 @@ staticTextPage["ask"]["default"]["Title"]               = "Ask The Creator - Web
 staticTextPage["ask"]["default"]["Text1"]               = "Welcome to Ask The Creator"
 staticTextPage["ask"]["default"]["Text2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"
 
-staticTextPage["404"]["Title"] = "Error 404"
-staticTextPage["404"]["ErrorCode"] = "404"
-staticTextPage["404"]["BoldText"] = "Opps!"
-staticTextPage["404"]["Text1"] = "Page not found."
-staticTextPage["404"]["Text2"] = "The page you're looking for doesn't exist."
-staticTextPage["404"]["Button1"] = "Go Home"
+staticTextPage["about"]["default"]["Title"]               = "About - Web Realms"
+staticTextPage["about"]["default"]["Text1"]               = "Welcome to Ask The Creator"
+staticTextPage["about"]["default"]["Text2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"
+
+staticTextPage["error404"]["Title"] = "Error 404"
+staticTextPage["error404"]["ErrorCode"] = "404"
+staticTextPage["error404"]["BoldText"] = "Opps!"
+staticTextPage["error404"]["Text1"] = "Page not found."
+staticTextPage["error404"]["Text2"] = "The page you're looking for doesn't exist."
+staticTextPage["error404"]["Button1"] = "Go Home"

@@ -2,6 +2,8 @@ global staticPageData
 staticPageData = {}
 
 staticPageData["SiteName"]             = "Web Realms"
+staticPageData["SiteOwner"]            = "Abot"
+staticPageData["OwnerUID"]             = "damn"
 staticPageData["CompanyName"]          = "RealmTech Games"
 staticPageData["CompanyTwitter"]       = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
 staticPageData["CompanyInstagram"]     = "https://youtu.be/dQw4w9WgXcQ&autoplay=1"
@@ -19,7 +21,7 @@ staticPageData["FooterTabelLinks2"] = [
 ]
 staticPageData["FooterTabelLinks3"] = [
     "/about/",
-    "/profile/\{\{ Uid \}\}",
+    f"/profile/{staticPageData['OwnerUID']}",
     "/donate",
     "/ask",
     "/idea"
@@ -60,11 +62,11 @@ import languages.da
 
 def LoadLanguagePage(page, language="en"):
     if   language == "en":
-        text = languages.en.staticTextPage[page.lower()].copy()
+        text = languages.en.staticTextPage[str(page).lower()].copy()
         text.update(languages.en.staticTextPage["header"])
         text.update(languages.en.staticTextPage["footer"])
     elif language == "da":
-        text = languages.da.staticTextPage[page.lower()].copy()
+        text = languages.da.staticTextPage[str(page).lower()].copy()
         text.update(languages.da.staticTextPage["header"])
         text.update(languages.da.staticTextPage["footer"])
     else:

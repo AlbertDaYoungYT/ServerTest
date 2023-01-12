@@ -23,6 +23,8 @@ staticTextPage["ask"]["default"] = {}
 staticTextPage["ask"]["newuser"] = {}
 staticTextPage["ask"]["logedin"] = {}
 
+staticTextPage["error404"] = {}
+
 
 
 
@@ -128,3 +130,10 @@ staticTextPage["shop"]["newuser"]["Button2"]             = ["Gå til Marked", "#
 staticTextPage["ask"]["default"]["Title"]               = "Spørg Skaberen - Web Realms"
 staticTextPage["ask"]["default"]["Text1"]               = "Velkommen til Spørg Skaberen"
 staticTextPage["ask"]["default"]["Text2"]               = "Stedet, hvor du kan stille skaberen, AKA Mig spørgsmål om hvad som helst, og jeg vil gøre mit bedste for at besvare spørgsmålet"
+
+staticTextPage["error404"]["Title"] = "Error 404"
+staticTextPage["error404"]["ErrorCode"] = "404"
+staticTextPage["error404"]["BoldText"] = "Opps!"
+staticTextPage["error404"]["Text1"] = "Siden blev ikke fundet."
+staticTextPage["error404"]["Text2"] = "Siden du leder efter findes ikke."
+staticTextPage["error404"]["Button1"] = "Gå Hjem"
