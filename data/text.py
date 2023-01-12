@@ -34,6 +34,7 @@ staticPageData["FooterTabelCounts"] = [
 ]
 
 staticPageData["HeaderNavLinks"] = ["/", "/games", "/shop", "/about"]
+staticPageData["HeaderNavNames"] = ["Home", "Games", "Shop", "About"]
 staticPageData["HeaderNavCount"] = len(staticPageData["HeaderNavLinks"])
 staticPageData["HeaderProLinks"] = [
     ["/profile/", "/friendlist"],
@@ -69,5 +70,4 @@ def LoadLanguagePage(page, language="en"):
     else:
         text = None
 
-    print(text)
     return text

@@ -9,10 +9,10 @@
 
             <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 {% for PageNav in range(StaticData["HeaderNavCount"]) %}
-                {% if Page == {{SiteData['PageNames'][PageNav]}} %}
-                <li class="nav-item"><a href="{{SiteData['HeaderNavLinks'][PageNav]}}" class="nav-link active navac">{{SiteData['PageNames'][PageNav]}}</a></li>
+                {% if Page == StaticData['HeaderNavNames'][PageNav] %}
+                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link active navac">{{SiteData['PageNames'][PageNav]}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="{{SiteData['HeaderNavLinks'][PageNav]}}" class="nav-link navac">{{SiteData['PageNames'][PageNav]}}</a></li>
+                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link navac">{{SiteData['PageNames'][PageNav]}}</a></li>
                 {% endif %}
                 {% endfor %}
             </ul>

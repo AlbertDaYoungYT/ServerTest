@@ -23,6 +23,8 @@ staticTextPage["ask"]["default"] = {}
 staticTextPage["ask"]["newuser"] = {}
 staticTextPage["ask"]["logedin"] = {}
 
+staticTextPage["404"] = {}
+
 
 
 
@@ -135,5 +137,5 @@ staticTextPage["404"]["Title"] = "Error 404"
 staticTextPage["404"]["ErrorCode"] = "404"
 staticTextPage["404"]["BoldText"] = "Opps!"
 staticTextPage["404"]["Text1"] = "Page not found."
-staticTextPage["404"]["Text2"] = "The page you’re looking for doesn’t exist."
+staticTextPage["404"]["Text2"] = "The page you're looking for doesn't exist."
 staticTextPage["404"]["Button1"] = "Go Home"

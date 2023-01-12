@@ -156,6 +156,7 @@ def HomePage():
 @app.route("/about")
 def About():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("About", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -163,7 +164,7 @@ def About():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.aboutTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -203,7 +204,7 @@ def About():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.aboutTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -219,6 +220,7 @@ def About():
 @app.route("/shop")
 def Shop():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("Shop", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -226,7 +228,7 @@ def Shop():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.shopTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -266,7 +268,7 @@ def Shop():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.shopTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -302,6 +304,7 @@ def ConfirmLogin():
 @app.route("/signin")
 def SignIn():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("SignIn", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -309,7 +312,7 @@ def SignIn():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.signinTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -362,6 +365,7 @@ def ConfirmSignup():
 @app.route("/signup")
 def SignUp():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("SignUp", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -369,7 +373,7 @@ def SignUp():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.signupTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -383,6 +387,7 @@ def SignUp():
 @app.route("/help")
 def Help():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("Help", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -390,7 +395,7 @@ def Help():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.helpTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -430,7 +435,7 @@ def Help():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.helpTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -446,6 +451,7 @@ def Help():
 @app.route("/ask")
 def AskTheCreator():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("Ask", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -453,7 +459,7 @@ def AskTheCreator():
             UserProfileSrc="Test",
             UserName="Test",
             UserProfile="Test",
-            SiteData=Text.askTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             isloggedin=False,
             isadmin=False,
@@ -493,7 +499,7 @@ def AskTheCreator():
             UserProfileSrc=f"/static/favicons/{data[2]}",
             UserName=data[1],
             UserProfile=f"{data[0]}",
-            SiteData=Text.askTextPage,
+            SiteData=staticTextPage,
             StaticData=Text.staticPageData,
             SiteWelcome=random.choice(Text.homeTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
@@ -516,6 +522,7 @@ def AdminURL():
 @app.route("/admin/homepage")
 def AdminHome():
     Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage("AdminHome", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     if Uid == None:
         return redirect(url_for("HomePage"))
     else:
@@ -940,12 +947,13 @@ def LogOut():
 @app.errorhandler(404)
 def invalid_route(e):
     Theme = T.FetchDefaultTheme()
+    staticTextPage = Text.LoadLanguagePage("404", language='en' if request.args.get("lang") == None else request.args.get("lang"))
     return render_template(
         "404.html",
         UserProfileSrc="Test",
         UserName="Test",
         UserProfile="Test",
-        SiteData=Text.errorTextPage,
+        SiteData=staticTextPage,
         StaticData=Text.staticPageData,
         isloggedin=False,
         isadmin=False,
@@ -966,4 +974,4 @@ def Test():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=("cert.pem", "key.pem"))
+    app.run(host="0.0.0.0", debug=True)#, ssl_context=("cert.pem", "key.pem"))
