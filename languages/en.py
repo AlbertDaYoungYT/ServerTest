@@ -31,7 +31,8 @@ staticTextPage["error404"] = {}
 
 
 
-staticTextPage["header"]["PageNames"] = ["Home", "Games", "Shop", "About"]
+staticTextPage["header"]["LeftPageNames"] = ["Home", "Games", "Shop", "About"]
+staticTextPage["header"]["RightPageNames"] = ["Login", "Signup"]
 
 staticTextPage["header"]["ProMenuDropDown"] = [
     "Friends",

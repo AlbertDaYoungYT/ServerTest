@@ -28,7 +28,8 @@ staticTextPage["error404"] = {}
 
 
 
-staticTextPage["header"]["PageNames"] = ["Hjem", "Spil", "Butik", "Om"]
+staticTextPage["header"]["LeftPageNames"] = ["Hjem", "Spil", "Butik", "Om"]
+staticTextPage["header"]["RightPageNames"] = ["Logind", "Tilmeld"]
 
 staticTextPage["header"]["ProMenuDropDown"] = [
     "Venner",

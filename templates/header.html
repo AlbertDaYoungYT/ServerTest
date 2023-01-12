@@ -10,9 +10,9 @@
             <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 {% for PageNav in range(StaticData["HeaderNavCount"]) %}
                 {% if Page == StaticData['HeaderNavNames'][PageNav] %}
-                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link active navac">{{SiteData['PageNames'][PageNav]}}</a></li>
+                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link active navac">{{SiteData['LeftPageNames'][PageNav]}}</a></li>
                 {% else %}
-                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link navac">{{SiteData['PageNames'][PageNav]}}</a></li>
+                <li class="nav-item"><a href="{{StaticData['HeaderNavLinks'][PageNav]}}" class="nav-link navac">{{SiteData['LeftPageNames'][PageNav]}}</a></li>
                 {% endif %}
                 {% endfor %}
             </ul>
@@ -120,12 +120,12 @@
             {% else %}
             <div class="text-end">
                 <form action="/signin">
-                    <input type="submit" class="btn btn-outline-light me-2" value="Login" />
+                    <input type="submit" class="btn btn-outline-light me-2" value="{{SiteData["RightPageNames"][0]}}" />
                 </form>
             </div>
             <div class="text-end">
                 <form action="/signup">
-                    <input type="submit" class="btn btn-warning" value="Signup"
+                    <input type="submit" class="btn btn-warning" value="{{SiteData["RightPageNames"][1]}}"
                         style="background-color: {{Theme[2]}};border-color: {{Theme[2]}};" />
                 </form>
             </div>
