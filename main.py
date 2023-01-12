@@ -142,7 +142,7 @@ def HomePage():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(Text.staticTextPage["logedin"]["Welcome"]) % (data[1],),
+            SiteWelcome=random.choice(staticTextPage["logedin"]["Welcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
