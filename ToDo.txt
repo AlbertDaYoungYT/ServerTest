@@ -10,4 +10,3 @@
 10  -       X           Create the game server
 11  -       X           Add Lotto winnings
 12  -       X           Create creator codes, codes and creator benefits
-14  -       X           Add Ranking System to Accounts
