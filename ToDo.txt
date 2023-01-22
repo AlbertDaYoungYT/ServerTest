@@ -10,3 +10,8 @@
 10  -       X           Create the game server
 11  -       X           Add Lotto winnings
 12  -       X           Create creator codes, codes and creator benefits
+13  -       X           Create a blog page
+14  -       X           Friend finding/dating platform
+15  -       X           Create a quiz and a casino for credits to be spend in
+16  -       X           Create a guessing game with the https://github.com/public-apis/public-apis repo
+17  -       X           Create a pokemon clone with rewards and trading

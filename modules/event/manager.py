@@ -1,6 +1,7 @@
 import db as DB
 import uuid
 import modules.time as time
+import data.settings as Settings
 
 
 def CreateEvent(ID, Name, Type, A, B, Op, Data):
@@ -20,3 +21,19 @@ def DeleteEvent(EID):
     cursor.execute(f"DELETE FROM events WHERE ID = '{EID}'")
 
     DB.EventDB.commit()
+
+def ValidateTriggered(UID, EID):
+    cursor = DB.EventDB.cursor()
+    cursor.execute(f"SELECT * FROM users WHERE UID = '{UID}' AND EID = '{EID}'")
+    event = cursor.fetchone()
+    if event is None:
+        return True
+    else:
+        cursor = DB.EventDB.cursor()
+        cursor.execute(f"SELECT Type FROM events WHERE ID = '{EID}'")
+        event = cursor.fetchone()
+        
+        if event == Settings.EVENT_TYPES["MultipleReddem"]:
+            return False
+        else:
+            return True

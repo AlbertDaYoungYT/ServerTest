@@ -2,6 +2,14 @@
 
 
 SECRET = "127962c4-fb88-40c7-a065-fa80eb46393a"
+STRIPE = ""
+
+
+EVENT_TYPES = {
+    "MultipleReddem": "MULTIREDEEM",
+    "OneTimeRedeem": "ONEREDEEM",
+    "Achievement": "ACHIEVEMENT"
+}
 
 RARITY_RANKS = {
     "C": [100, 50],

@@ -47,8 +47,10 @@ DB.ChallengesDB.commit()
 mycursor = DB.EventDB.cursor()
 
 mycursor.execute("DROP TABLE IF EXISTS events")
+mycursor.execute("DROP TABLE IF EXISTS users")
 
 mycursor.execute("CREATE TABLE `events` (`ID` TEXT NOT NULL,`Name` TEXT NOT NULL,`Type` TEXT NOT NULL,`A` TEXT NOT NULL,`B` TEXT NOT NULL,`Op` TEXT NOT NULL,`Data` TEXT NOT NULL)")
+mycursor.execute("CREATE TABLE `users` (`UID` TEXT NOT NULL,`EID` TEXT NOT NULL,`Date` INT NOT NULL)")
 
 DB.EventDB.commit()
 
@@ -60,7 +62,7 @@ mycursor.execute("DROP TABLE IF EXISTS codes")
 mycursor.execute("DROP TABLE IF EXISTS creators")
 
 mycursor.execute("CREATE TABLE `lotto` (`ID` TEXT NOT NULL,`Type` TEXT NOT NULL,`Numbers` TEXT NOT NULL,`Reward` TEXT NOT NULL,`Date` TEXT NOT NULL)")
-mycursor.execute("CREATE TABLE `codes` (`Code` TEXT NOT NULL,`Reward` TEXT NOT NULL,`DateInvalid` TEXT NOT NULL)")
+mycursor.execute("CREATE TABLE `codes` (`Code` TEXT NOT NULL,`EID` TEXT NOT NULL,`DateInvalid` TEXT NOT NULL)")
 mycursor.execute("CREATE TABLE `creators` (`UID` TEXT NOT NULL,`Code` TEXT NOT NULL,`Name` TEXT NOT NULL,`Date` TEXT NOT NULL)")
 
 DB.RewardsDB.commit()

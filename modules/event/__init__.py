@@ -1,7 +1,7 @@
 import modules.event.manager
 
 
-def trigger(id):
+def trigger(id, *args):
     event = modules.event.manager.FetchEvent(id)
 
     if eval(event[3] + event[5] + event[4]):
