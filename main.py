@@ -884,6 +884,11 @@ def ProfileBadge(uid, urlbadgeid):
         return redirect(url_for("HomePage"))
 
 
+@app.route("/api/1.0/<_class>/<_function>", methods=["POST", "GET"])
+def API(_class, _function):
+    return (_class, _function, request.args.get())
+
+
 @app.route("/subscribe", methods=["POST"])
 def Subscribe():
     if Data.ValidateID(session["Uid"]):
