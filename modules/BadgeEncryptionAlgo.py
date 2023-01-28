@@ -42,15 +42,15 @@ def GenerateID():
     return b85encode(cipher.encrypt(padded_data)).decode(), time_of_creation
 
 
-def GenerateIDParams(Machine, Uname, System, IP, Message):
+def GenerateCustom(Signer, Client, CustomText="", *arg):
     time_of_creation = time.time()
-    data_for_encrypt = [Machine,
-                        Uname,
-                        System,
-                        IP,
-                        Message
-                    ]
+    data_for_encrypt = [platform.machine(),
+                        Signer,
+                        Client,
+                        CustomText
+                    ] + list(arg)
 
+    signature = [ ord(x) for x in Signer ]
     final = []
     for item in data_for_encrypt:
         for char in item:
@@ -61,7 +61,7 @@ def GenerateIDParams(Machine, Uname, System, IP, Message):
     sm = set(final)
     for x in final:
         if x != 1:
-            nfinal.append(x-sorted(sm)[1] + 2)
+            nfinal.append(x-sorted(sm)[1] + round(reduce(lambda a, b: a + b, signature) / len(signature)))
         else:
             nfinal.append(x)
     final = nfinal
@@ -70,11 +70,11 @@ def GenerateIDParams(Machine, Uname, System, IP, Message):
     for integer in final:
         merged += "{0:0=2d}".format(integer)
 
-    key = hashlib.md5(str(time_of_creation).encode('utf-8')).hexdigest()
+    key = hashlib.sha1(str(time_of_creation).encode('utf-8')).hexdigest()
 
     cipher = AES.new(key.encode("utf-8"), AES.MODE_CBC, iv=b"0123456789abcdef")
-    padded_data = pad(b64encode(merged.encode()) + b"\x00", cipher.block_size)
-    return b85encode(cipher.encrypt(padded_data)).decode(), time_of_creation
+    padded_data = pad(b32encode(merged.encode()) + b"\x00", cipher.block_size)
+    return b64encode(cipher.encrypt(padded_data)).decode(), time_of_creation
 
 
 def DecodeID(ID, time_of_creation):

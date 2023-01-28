@@ -1,4 +1,7 @@
 from __future__ import division
+from loguru import logger
+
+
 
 import base64
 from flask import *
@@ -884,9 +887,11 @@ def ProfileBadge(uid, urlbadgeid):
         return redirect(url_for("HomePage"))
 
 
-@app.route("/api/1.0/<_class>/<_function>", methods=["POST", "GET"])
-def API(_class, _function):
-    return (_class, _function, request.args.get())
+@app.route("/api/1.0/<func>", methods=["POST", "GET"])
+def API(func):
+    import modules.api as API
+    json = API.ConstructJson(func, request.args)
+    return API.HandleRequest(json)
 
 
 @app.route("/subscribe", methods=["POST"])
