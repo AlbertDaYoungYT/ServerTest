@@ -1,0 +1,17 @@
+.vscode/
+__pycache__/
+log/*.log
+cert.pem
+key.pem
+data/__pycache__/
+languages/__pycache__/
+modules/__pycache__/
+modules/event/__pycache__/
+modules/friends/__pycache__/
+modules/market/__pycache__/
+modules/notifications/__pycache__/
+modules/RealmMingle/__pycache__/
+modules/rewards/__pycache__/
+.stripe
+.flask
+.
