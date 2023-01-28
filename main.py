@@ -1,6 +1,11 @@
 from __future__ import division
+import data.settings as S
+
 from loguru import logger
 
+logger.add(
+    "./logs/{time}.log", rotation=S.LOG_ROTATION_SIZE, retention=S.LOG_RETENTION_TIME
+)
 
 
 import base64
@@ -8,12 +13,15 @@ from flask import *
 from werkzeug.utils import *
 from flask_cors import CORS
 from datetime import datetime, timedelta, date
+from lupa import LuaRuntime
 import hashlib
 import random
 import uuid
 import html
+import lupa
 import os
 import re
+logger.success("Imported External Modules")
 
 import data.text as Text
 import modules.DataBase as Data
@@ -25,19 +33,39 @@ import modules.event as EV
 import modules.BadgeDB as BD
 import modules.Theme as T
 import modules.time as time
-import data.settings as S
 import db as DB
+logger.success("Imported Internal Modules")
 
-app = Flask(__name__)
-CORS(app)
 
 UPLOAD_FOLDER = "static/favicons/uploads"
 EMAIL_REGEX = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 
+app = Flask(__name__)
+CORS(app)
 app.secret_key = S.SECRET
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
+logger.success("Initiated Flask")
+
+import click
+def secho(text, file=None, nl=None, err=None, color=None, **styles):
+    pass
+
+def echo(text, file=None, nl=None, err=None, color=None, **styles):
+    pass
+
+click.echo = echo
+click.secho = secho
+
+import logging
+log = logging.getLogger('werkzeug')
+if S.DISABLE_FLASK_LOG:
+    log.disabled = True
+    logger.success(f"Disabled Flask Logging")
+else:
+    log.setLevel(S.FLASK_LOG_LEVEL)
+    logger.success(f"Set Flask Log Level to {S.FLASK_LOG_LEVEL}")
 
 
 def check_email(email):
@@ -80,22 +108,13 @@ def calculate_notifier_times(Notifiers):
     return final
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route("/")
 def HomePage():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("Home", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "Home",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -117,11 +136,12 @@ def HomePage():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -145,7 +165,8 @@ def HomePage():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(staticTextPage["logedin"]["Welcome"]) % (data[1],),
+            SiteWelcome=random.choice(staticTextPage["logedin"]["Welcome"])
+            % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
@@ -159,7 +180,10 @@ def HomePage():
 @app.route("/about")
 def About():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("About", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "About",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -181,11 +205,12 @@ def About():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -223,7 +248,10 @@ def About():
 @app.route("/shop")
 def Shop():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("Shop", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "Shop",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -245,11 +273,12 @@ def Shop():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -307,7 +336,10 @@ def ConfirmLogin():
 @app.route("/signin")
 def SignIn():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("SignIn", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "SignIn",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -368,7 +400,10 @@ def ConfirmSignup():
 @app.route("/signup")
 def SignUp():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("SignUp", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "SignUp",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -390,7 +425,10 @@ def SignUp():
 @app.route("/help")
 def Help():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("Help", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "Help",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -412,11 +450,12 @@ def Help():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -454,7 +493,10 @@ def Help():
 @app.route("/ask")
 def AskTheCreator():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("Ask", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "Ask",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         Theme = T.FetchDefaultTheme()
         return render_template(
@@ -476,11 +518,12 @@ def AskTheCreator():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -515,8 +558,6 @@ def AskTheCreator():
         )
 
 
-
-
 @app.route("/admin")
 def AdminURL():
     return redirect(url_for("AdminHome"))
@@ -525,7 +566,10 @@ def AdminURL():
 @app.route("/admin/homepage")
 def AdminHome():
     Uid = session.get("Uid")
-    staticTextPage = Text.LoadLanguagePage("AdminHome", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "AdminHome",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     if Uid == None:
         return redirect(url_for("HomePage"))
     else:
@@ -535,11 +579,12 @@ def AdminHome():
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -811,11 +856,12 @@ def ProfileBadgeList(uid):
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -855,11 +901,12 @@ def ProfileBadge(uid, urlbadgeid):
             if "".join(data) == "NOTFOUND":
                 return redirect(url_for("LogOut"))
         except Exception as e:
-            pass
+            logger.warning(f"Handled Error: '{e}'")
 
         try:
             Theme = session["theme"]
         except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
             Theme = "default"
         Theme = T.FetchTheme(Theme)
 
@@ -890,6 +937,7 @@ def ProfileBadge(uid, urlbadgeid):
 @app.route("/api/1.0/<func>", methods=["POST", "GET"])
 def API(func):
     import modules.api as API
+
     json = API.ConstructJson(func, request.args)
     return API.HandleRequest(json)
 
@@ -897,10 +945,7 @@ def API(func):
 @app.route("/subscribe", methods=["POST"])
 def Subscribe():
     if Data.ValidateID(session["Uid"]):
-        E.Add(
-            session["Uid"],
-            request.form["email"]
-        )
+        E.Add(session["Uid"], request.form["email"])
     else:
         return redirect(url_for("HomePage"))
 
@@ -908,9 +953,7 @@ def Subscribe():
 @app.route("/unsubscribe", methods=["POST"])
 def UnSubscribe():
     if Data.ValidateID(session["Uid"]):
-        E.Remove(
-            session["Uid"]
-        )
+        E.Remove(session["Uid"])
     else:
         return redirect(url_for("HomePage"))
 
@@ -957,7 +1000,10 @@ def LogOut():
 @app.errorhandler(404)
 def invalid_route(e):
     Theme = T.FetchDefaultTheme()
-    staticTextPage = Text.LoadLanguagePage("error404", language='en' if request.args.get("lang") == None else request.args.get("lang"))
+    staticTextPage = Text.LoadLanguagePage(
+        "error404",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
     return render_template(
         "404.html",
         UserProfileSrc="Test",
@@ -976,12 +1022,12 @@ def invalid_route(e):
 def Test():
     N.friend.SendRequest(session["Uid"], session["Uid"])
     ID = uuid.uuid4()
-    EV.manager.CreateEvent("Test", "test", "True", "True", "==", """print("damn")""")
+    EV.manager.CreateEvent(ID, "Test", "test", "True", "True", "==", """print("damn")""")
     EV.trigger(ID)
     print(request.accept_languages, request.args)
+    logger.info(f"Testing {[request.accept_languages, request.args, ID, session['Uid']]}")
     return redirect(url_for("HomePage"))
 
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=("cert.pem", "key.pem"))
+    app.run(host="0.0.0.0", port=443, ssl_context=("cert.pem", "key.pem"))

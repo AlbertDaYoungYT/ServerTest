@@ -1,8 +1,14 @@
+import logging
 
-LOG_ROTATION_SIZE = "10 MB"
 
-SECRET = "127962c4-fb88-40c7-a065-fa80eb46393a"
-STRIPE = ""
+
+LOG_ROTATION_SIZE  = "10 MB"
+LOG_RETENTION_TIME = "1 week"
+FLASK_LOG_LEVEL = logging.INFO
+DISABLE_FLASK_LOG = True
+
+SECRET = open(".flask", "r").read()
+STRIPE = open(".stripe", "r").read()
 
 
 EVENT_TYPES = {

@@ -1,4 +1,5 @@
 import os
+from loguru import logger
 
 os.remove("./data/friends.db")
 os.remove("./data/notifications.db")

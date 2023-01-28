@@ -1,0 +1,10 @@
+2023-01-28 23:55:58.498 | SUCCESS  | __main__:<module>:24 - Imported External Modules
+2023-01-28 23:55:58.508 | SUCCESS  | db:<module>:20 - Finished Loading Databases
+2023-01-28 23:55:58.511 | SUCCESS  | modules.notifications:<module>:4 - Notification module Initiated
+2023-01-28 23:55:58.512 | SUCCESS  | modules.friends:<module>:3 - Friends module Initiated
+2023-01-28 23:55:58.515 | SUCCESS  | modules.event:<module>:3 - Event module Initiated
+2023-01-28 23:55:58.645 | SUCCESS  | __main__:<module>:37 - Imported Internal Modules
+2023-01-28 23:55:58.647 | SUCCESS  | __main__:<module>:49 - Initiated Flask
+2023-01-28 23:56:02.017 | SUCCESS  | modules.event:trigger:11 - Event 'a541a084-94e7-4eeb-8b7d-09f9f1d906ab' triggered
+2023-01-28 23:56:02.019 | INFO     | __main__:Test:1009 - Testing [LanguageAccept([('en-GB', 1), ('en', 0.5)]), ImmutableMultiDict([]), UUID('a541a084-94e7-4eeb-8b7d-09f9f1d906ab'), UUID('c4b9bff8-9f5e-11ed-964f-001a7dda7111')]
+2023-01-28 23:56:02.039 | WARNING  | __main__:HomePage:120 - Handled Error: 'sequence item 5: expected str instance, int found'

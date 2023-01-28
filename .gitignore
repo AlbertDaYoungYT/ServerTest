@@ -4,6 +4,7 @@ log/*.log
 cert.pem
 key.pem
 data/__pycache__/
+data/main.db
 languages/__pycache__/
 modules/__pycache__/
 modules/event/__pycache__/
@@ -14,4 +15,4 @@ modules/RealmMingle/__pycache__/
 modules/rewards/__pycache__/
 .stripe
 .flask
-.
+.rnd

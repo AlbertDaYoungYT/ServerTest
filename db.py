@@ -1,4 +1,5 @@
 import sqlite3
+from __main__ import logger
 
 global MainDB
 global SitesDB
@@ -16,3 +17,4 @@ FriendsDB = sqlite3.connect("data/friends.db", check_same_thread=False)
 EventDB = sqlite3.connect("data/event.db", check_same_thread=False)
 RewardsDB = sqlite3.connect("data/rewards.db", check_same_thread=False)
 DeveloperDB = sqlite3.connect("data/developer.db", check_same_thread=False)
+logger.success("Finished Loading Databases")

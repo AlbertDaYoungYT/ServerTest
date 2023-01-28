@@ -15,3 +15,5 @@
 15  -       X           Create a quiz and a casino for credits to be spend in
 16  -       X           Create a guessing game with the https://github.com/public-apis/public-apis repo
 17  -       X           Create a pokemon clone with rewards and trading
+18  -       X           Create a bingo game mode
+19  -       X           Add UID Logging to all users
