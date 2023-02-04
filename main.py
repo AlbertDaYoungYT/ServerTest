@@ -28,6 +28,7 @@ import modules.DataBase as Data
 import modules.UserProfile as UP
 import modules.notifications as N
 import modules.Email as E
+import modules.blog as B
 import modules.friends as F
 import modules.event as EV
 import modules.BadgeDB as BD
@@ -234,11 +235,77 @@ def About():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(staticTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,
             Page="About",
+            Badges=badges,
+            Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
+            noNotifiers=NoNotifiers,
+        )
+
+
+@app.route("/blog")
+def Blog():
+    Uid = session.get("Uid")
+    staticTextPage = Text.LoadLanguagePage(
+        "Blog",
+        language="en" if request.args.get("lang") == None else request.args.get("lang"),
+    )
+    if Uid == None:
+        Theme = T.FetchDefaultTheme()
+        return render_template(
+            "blog.html",
+            UserProfileSrc="Test",
+            UserName="Test",
+            UserProfile="Test",
+            SiteData=staticTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=False,
+            isadmin=False,
+            Theme=Theme,
+            Page="Blog",
+        )
+    else:
+        data = list(UP.FetchUserdata(Uid))
+        badges = [BD.FetchBadge(badge[1]) for badge in list(BD.FetchUserBadges(Uid))]
+        try:
+            if "".join(data) == "NOTFOUND":
+                return redirect(url_for("LogOut"))
+        except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
+
+        try:
+            Theme = session["theme"]
+        except Exception as e:
+            logger.warning(f"Handled Error: '{e}'")
+            Theme = "default"
+        Theme = T.FetchTheme(Theme)
+
+        if data[-1] == "False":
+            admin = False
+        else:
+            admin = True
+
+        Notifications = N.friend.FetchNotifiers(Uid)
+        NoNotifiers = False
+        if Notifications == []:
+            NoNotifiers = True
+
+        Notifications = calculate_notifier_times(Notifications)
+
+        return render_template(
+            "blog.html",
+            Uid=data[0],
+            UserProfileSrc=f"/static/favicons/{data[2]}",
+            UserName=data[1],
+            UserProfile=f"{data[0]}",
+            SiteData=staticTextPage,
+            StaticData=Text.staticPageData,
+            isloggedin=True,
+            isadmin=False,
+            Theme=Theme,
+            Page="Blog",
             Badges=badges,
             Notifications=[[html.unescape(str(y)) for y in x] for x in Notifications],
             noNotifiers=NoNotifiers,
@@ -302,7 +369,6 @@ def Shop():
             UserProfile=f"{data[0]}",
             SiteData=staticTextPage,
             StaticData=Text.staticPageData,
-            SiteWelcome=random.choice(staticTextPage["SiteWelcome"]) % (data[1],),
             isloggedin=True,
             isadmin=False,
             Theme=Theme,

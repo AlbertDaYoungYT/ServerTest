@@ -1,0 +1,10 @@
+2023-01-29 01:51:21.542 | SUCCESS  | __main__:<module>:24 - Imported External Modules
+2023-01-29 01:51:21.551 | SUCCESS  | db:<module>:20 - Finished Loading Databases
+2023-01-29 01:51:21.553 | SUCCESS  | modules.notifications:<module>:4 - Notification module Initiated
+2023-01-29 01:51:21.563 | SUCCESS  | modules.blog:<module>:4 - Blog module Initiated
+2023-01-29 01:51:21.563 | ERROR    | modules.blog:start:15 - Exception in creation './data/blogs/2023/January/29/': [WinError 3] The system cannot find the path specified: './data/blogs/2023/January/29/'
+2023-01-29 01:51:21.565 | SUCCESS  | modules.friends:<module>:3 - Friends module Initiated
+2023-01-29 01:51:21.567 | SUCCESS  | modules.event:<module>:3 - Event module Initiated
+2023-01-29 01:51:21.698 | SUCCESS  | __main__:<module>:38 - Imported Internal Modules
+2023-01-29 01:51:21.700 | SUCCESS  | __main__:<module>:50 - Initiated Flask
+2023-01-29 01:51:21.701 | SUCCESS  | __main__:<module>:66 - Disabled Flask Logging

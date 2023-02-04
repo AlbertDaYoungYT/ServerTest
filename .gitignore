@@ -7,6 +7,7 @@ data/__pycache__/
 data/main.db
 languages/__pycache__/
 modules/__pycache__/
+modules/blog/__pycache__/
 modules/event/__pycache__/
 modules/friends/__pycache__/
 modules/market/__pycache__/

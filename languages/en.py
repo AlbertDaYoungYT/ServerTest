@@ -26,6 +26,9 @@ staticTextPage["ask"]["logedin"] = {}
 staticTextPage["about"] = {}
 staticTextPage["about"]["default"] = {}
 
+staticTextPage["blog"] = {}
+staticTextPage["blog"]["default"] = {}
+
 staticTextPage["error404"] = {}
 
 
@@ -140,6 +143,10 @@ staticTextPage["ask"]["default"]["Text2"]               = "The place where you c
 staticTextPage["about"]["default"]["Title"]               = "About - Web Realms"
 staticTextPage["about"]["default"]["Text1"]               = "Welcome to Ask The Creator"
 staticTextPage["about"]["default"]["Text2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"
+
+staticTextPage["blog"]["default"]["Title"]               = "About - Web Realms"
+staticTextPage["blog"]["default"]["Text1"]               = "Welcome to Ask The Creator"
+staticTextPage["blog"]["default"]["Text2"]               = "The place where you can ask the creator, AKA Me questions about anything and i will try my best to answer them"
 
 staticTextPage["error404"]["Title"] = "Error 404"
 staticTextPage["error404"]["ErrorCode"] = "404"
