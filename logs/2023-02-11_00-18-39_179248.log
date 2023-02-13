@@ -1,0 +1,3 @@
+2023-02-11 00:18:39.498 | SUCCESS  | __main__:<module>:25 - Imported External Modules
+2023-02-11 00:18:39.553 | SUCCESS  | db:<module>:20 - Finished Loading Databases
+2023-02-11 00:18:39.557 | SUCCESS  | modules.notifications:<module>:4 - Notification module Initiated

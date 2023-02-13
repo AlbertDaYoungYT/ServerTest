@@ -1,0 +1,8 @@
+2023-02-11 15:18:08.062 | SUCCESS  | __main__:<module>:25 - Imported External Modules
+2023-02-11 15:18:08.071 | SUCCESS  | db:<module>:20 - Finished Loading Databases
+2023-02-11 15:18:08.073 | SUCCESS  | modules.notifications:<module>:4 - Notification module Initiated
+2023-02-11 15:18:08.075 | SUCCESS  | modules.friends:<module>:3 - Friends module Initiated
+2023-02-11 15:18:08.077 | SUCCESS  | modules.event:<module>:3 - Event module Initiated
+2023-02-11 15:18:08.155 | SUCCESS  | __main__:<module>:38 - Imported Internal Modules
+2023-02-11 15:18:08.157 | SUCCESS  | __main__:<module>:51 - Initiated Flask
+2023-02-11 15:18:08.157 | SUCCESS  | __main__:<module>:67 - Disabled Flask Logging

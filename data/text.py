@@ -22,7 +22,7 @@ staticPageData["FooterTabelLinks2"] = [
 staticPageData["FooterTabelLinks3"] = [
     "/about/",
     f"/profile/{staticPageData['OwnerUID']}",
-    "/donate",
+    "https://donate.stripe.com/test_cN2cO96bw4xB2kw5kk",
     "/ask",
     "/idea"
 ]

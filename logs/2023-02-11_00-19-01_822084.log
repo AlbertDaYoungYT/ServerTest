@@ -1,0 +1,10 @@
+2023-02-11 00:19:02.073 | SUCCESS  | __main__:<module>:25 - Imported External Modules
+2023-02-11 00:19:02.081 | SUCCESS  | db:<module>:20 - Finished Loading Databases
+2023-02-11 00:19:02.084 | SUCCESS  | modules.notifications:<module>:4 - Notification module Initiated
+2023-02-11 00:19:02.090 | SUCCESS  | modules.friends:<module>:3 - Friends module Initiated
+2023-02-11 00:19:02.093 | SUCCESS  | modules.event:<module>:3 - Event module Initiated
+2023-02-11 00:19:02.308 | SUCCESS  | __main__:<module>:38 - Imported Internal Modules
+2023-02-11 00:19:02.310 | SUCCESS  | __main__:<module>:51 - Initiated Flask
+2023-02-11 00:19:02.310 | SUCCESS  | __main__:<module>:67 - Disabled Flask Logging
+2023-02-11 00:19:17.271 | WARNING  | __main__:HomePage:141 - Handled Error: 'sequence item 5: expected str instance, int found'
+2023-02-11 00:23:09.681 | WARNING  | __main__:HomePage:141 - Handled Error: 'sequence item 5: expected str instance, int found'

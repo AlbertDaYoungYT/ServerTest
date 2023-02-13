@@ -16,6 +16,7 @@ from datetime import datetime, timedelta, date
 from lupa import LuaRuntime
 import hashlib
 import random
+import stripe
 import uuid
 import html
 import lupa
@@ -28,7 +29,6 @@ import modules.DataBase as Data
 import modules.UserProfile as UP
 import modules.notifications as N
 import modules.Email as E
-import modules.blog as B
 import modules.friends as F
 import modules.event as EV
 import modules.BadgeDB as BD
@@ -44,6 +44,7 @@ EMAIL_REGEX = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 app = Flask(__name__)
 CORS(app)
 app.secret_key = S.SECRET
+stripe.api_key = S.STRIPE
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
